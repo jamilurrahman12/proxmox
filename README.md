@@ -1,5 +1,6 @@
-# proxmox
-Step-by-step guide to setup Proxmox VE
+# Open Cloud Revolution: Hands-On Private Cloud with PROXMOX VE
+
+## Step-by-step guide to setup Proxmox VE
 
 Install VMware workstation on your laptop
 
