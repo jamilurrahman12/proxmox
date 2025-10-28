@@ -1,8 +1,5 @@
 # Open Cloud Revolution: Hands-On Private Cloud with PROXMOX VE
-
-prepares you to administer a full-fledge cloud infrastructure for an organization of any size.
-<img width="924" height="42" alt="image" src="https://github.com/user-attachments/assets/fdc16e8a-e5e4-408a-aa3e-6d50d078f3eb" />
-
+This guide prepares you to administer a full-fledge cloud infrastructure for an organization of any size.
 
 ## Install VMware workstation on your laptop
 
