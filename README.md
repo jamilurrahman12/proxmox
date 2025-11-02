@@ -87,13 +87,15 @@ Go to **Edit** → **Virtual Network Editor**
 
 It will open an editor wizard. Click on the "Change Settings" button to adjust any network configuration. We need to create/edit 2 types of network adapter. One (01) is **Host-only** type and another is **NAT** type.
 
-Click on **Host-only** virtual adapter and edit the settings as shown in the following screenshot.
+1. Click on **Host-only** virtual adapter and edit the settings as shown in the following screenshot.
 
 <img width="604" height="528" alt="image" src="https://github.com/user-attachments/assets/219d8514-c177-4be8-ac66-25ed57cfa724" />
 
-Click on **NAT** virtual adapter and edit the settings as shown in the following screenshots. 
+2. Click on **NAT** virtual adapter and edit the settings as shown in the following screenshots. 
 
 <img width="602" height="526" alt="image" src="https://github.com/user-attachments/assets/9168a8c0-3b99-4bca-b252-7689ee1371fb" />
+
+Here we can't use '1' as gateway, because host machine uses '1' as it's (virtual adapter) gateway. That's why we need to set '2' or any number (below 255). Obviously, we need to set this IP as gateway within any VMs (Proxmox nodes).
 
 <img width="488" height="520" alt="image" src="https://github.com/user-attachments/assets/05897a72-f23c-4fb8-9505-5e4cbc09ed86" />
 
