@@ -95,10 +95,13 @@ It will open an editor wizard. Click on the "Change Settings" button to adjust a
 
 <img width="602" height="526" alt="image" src="https://github.com/user-attachments/assets/9168a8c0-3b99-4bca-b252-7689ee1371fb" />
 
-Here we can't use '1' as gateway, because host machine uses '1' as it's (virtual adapter) gateway. That's why we need to set '2' or any number (below 255). Obviously, we need to set this IP as gateway within any VMs (Proxmox nodes).
+
 
 <img width="488" height="520" alt="image" src="https://github.com/user-attachments/assets/05897a72-f23c-4fb8-9505-5e4cbc09ed86" />
 
+Here we can't use '1' as gateway, because host machine uses '1' as it's (virtual adapter) gateway. That's why we need to set '2' or any number (below 255). Obviously, we need to set this IP as gateway within any VMs (Proxmox nodes).
+
+### Creating a Proxmox node
 
 ```bash
 git clone https://github.com/you/repo.git
