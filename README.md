@@ -37,7 +37,7 @@ Before you can create or run virtual machines, your computer’s processor must 
     (Tip: Watch for the message “**Press F2/DEL to enter Setup**” on boot screen)
 
     3. Look for settings like CPU / Processor / Advanced Settings / System Configuration
-    4. Go to any of the above available options and enable VT-x for Intel CPU or enable AMD-V / SVM Mode for AMD CPU
+    4. Go to any of the above available options and enable **VT-x** for Intel CPU or enable **AMD-V / SVM Mode** for AMD CPU
 
 ✅ How to Verify Virtualization is Enabled (**Windows**)
 
