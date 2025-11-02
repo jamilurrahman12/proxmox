@@ -7,6 +7,14 @@ For Hosting 3-Node Proxmox Cluster
 
 The following section provides step-by-step instructions to install VMware Workstation on your computer. VMware Workstation allows you to create and manage virtual machines (VMs) — in this case, we’ll use it to host a 3-node Proxmox cluster and one (01) Proxmox backup server.
 
+### VMware Software Download
+
+VMware Workstation Pro is not designed for MacOS; it runs on Windows and Linux. You need to use VMware Fusion, which is available for macOS (both Intel and Apple silicon)
+
+For Windows - https://drive.bdren.net.bd/index.php/s/WgFmXDSC6T3YEPA
+
+For Mac OS - https://drive.bdren.net.bd/index.php/s/om2T99cerZripNe
+
 ### System Requirements
 
 | Requirement             | Minimum                                                            | Recommended           |
@@ -41,10 +49,12 @@ Before you can create or run virtual machines, your computer’s processor must 
 
 ✅ How to Verify Virtualization is Enabled (MacOS)
 
-For Intel Mac: Open terminal and run the below command
+For Intel Mac: Open terminal and run the below command.
+
     sysctl -a | grep machdep.cpu.features
     
 Look for the feature flag VMX in the output.
+
 If VMX is listed → virtualization (Intel VT-x) is supported and enabled.
 
 If VMX is missing → your Mac’s CPU is too old to support virtualization.
@@ -57,11 +67,8 @@ You can check support with running the following command in the terminal:
 If your Mac returns a result without error (e.g., hw.optional.arm64: 1), your system fully supports virtualization.
 
 
-We can download the software from here.
 
-For Windows - https://drive.bdren.net.bd/index.php/s/WgFmXDSC6T3YEPA
 
-For Mac OS - https://drive.bdren.net.bd/index.php/s/om2T99cerZripNe
 
 
 
