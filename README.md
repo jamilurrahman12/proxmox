@@ -22,7 +22,7 @@ The following section provides step-by-step instructions to install VMware Works
 Before you can create or run virtual machines, your computer’s processor must have hardware virtualization enabled. This allows VMware to run multiple virtual systems efficiently on your computer.
 
     1. Restart Your Computer
-    2. Enter BIOS/UEFI Setup: As soon as your computer starts (before Windows or macOS logo appears), press one of the following keys repeatedly:
+    2. Enter BIOS/UEFI Setup: As soon as your computer starts (before Windows logo appear), press one of the following keys repeatedly:
        * Dell / ASUS / Lenovo / Acer: F2
        * HP: Esc or F10
        * MSI / Gigabyte: Del
@@ -38,6 +38,24 @@ Before you can create or run virtual machines, your computer’s processor must 
     * Check the bottom-right corner.
     * It should say: “Virtualization: Enabled”
     * If it shows “Disabled”, repeat the steps above.
+
+✅ How to Verify Virtualization is Enabled (MacOS)
+
+For Intel Mac: Open terminal and run the below command
+    sysctl -a | grep machdep.cpu.features
+    
+Look for the feature flag VMX in the output.
+If VMX is listed → virtualization (Intel VT-x) is supported and enabled.
+
+If VMX is missing → your Mac’s CPU is too old to support virtualization.
+
+For Apple Silicon (M1/M2/M3) Macs: Apple Silicon Macs use a built-in Apple Virtualization Framework instead of Intel VT-x.
+You can check support with running the following command in the terminal:
+
+    sysctl hw.optional.arm64
+    
+If your Mac returns a result without error (e.g., hw.optional.arm64: 1), your system fully supports virtualization.
+
 
 We can download the software from here.
 
