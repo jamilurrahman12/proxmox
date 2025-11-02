@@ -17,34 +17,27 @@ The following section provides step-by-step instructions to install VMware Works
 | **Disk Space**          | 50 GB free                                                         | 100 GB+ SSD preferred |
 | **Internet Connection** | Required for download & updates                                    | Stable broadband      |
 
-    ⚙️ Tip: Enabling Virtualization in BIOS/UEFI
+⚙️ Tip: Enabling Virtualization in BIOS/UEFI
 
 Before you can create or run virtual machines, your computer’s processor must have hardware virtualization enabled. This allows VMware to run multiple virtual systems efficiently on your computer.
 
-1. Restart Your Computer
-2. Enter BIOS/UEFI Setup: As soon as your computer starts (before Windows or macOS logo appears), press one of the following keys repeatedly:
+    1. Restart Your Computer
+    2. Enter BIOS/UEFI Setup: As soon as your computer starts (before Windows or macOS logo appears), press one of the following keys repeatedly:
+    Dell / ASUS / Lenovo / Acer: F2
+    HP: Esc or F10
+    MSI / Gigabyte: Del
+    (Tip: Watch for the message “Press F2/DEL to enter Setup” on boot screen.)
 
-   Dell / ASUS / Lenovo / Acer: F2
-   HP: Esc or F10
-   MSI / Gigabyte: Del
+    3. Look for settings like CPU / Processor / Advanced Settings / System Configuration
+    4. Go to any of the above available options and enable VT-x for Intel CPU or enable AMD-V / SVM Mode for AMD CPU
 
-(Tip: Watch for the message “Press F2/DEL to enter Setup” on boot screen.)
+✅ How to Verify Virtualization is Enabled (Windows)
 
-3. Look for settings like CPU / Processor / Advanced Settings / System Configuration
-4. Go to any of the above available options and enable VT-x for Intel CPU or enable AMD-V / SVM Mode for AMD CPU
-
-
-   ✅ How to Verify Virtualization is Enabled (Windows)
-
- Open Task Manager.
-
- Go to Performance → CPU tab.
-
- Check the bottom-right corner.
- It should say:
- “Virtualization: Enabled”
-
- If it shows “Disabled”, repeat the steps above.
+    Open Task Manager.
+    Go to Performance → CPU tab.
+    Check the bottom-right corner.
+    It should say: “Virtualization: Enabled”
+    If it shows “Disabled”, repeat the steps above.
 
 We can download the software from here.
 
