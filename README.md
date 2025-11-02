@@ -29,15 +29,16 @@ VMware Workstation Pro is not designed for MacOS; it runs on Windows and Linux. 
 
 Before you can create or run virtual machines, your computer’s processor must have hardware virtualization enabled. This allows VMware to run multiple virtual systems efficiently on your computer.
 
-    1. Restart Your Computer
-    2. Enter BIOS/UEFI Setup: As soon as your computer starts (before Windows logo appear), press one of the following keys repeatedly:
+### Steps -
+1. Restart Your Computer
+2. Enter BIOS/UEFI Setup: As soon as your computer starts (before Windows logo appear), press one of the following keys repeatedly:
        * Dell / ASUS / Lenovo / Acer: **F2**
        * HP: **Esc or F10**
        * MSI / Gigabyte: **Del**
     (Tip: Watch for the message “**Press F2/DEL to enter Setup**” on boot screen)
 
-    3. Look for settings like CPU / Processor / Advanced Settings / System Configuration
-    4. Go to any of the above available options and enable **VT-x** for Intel CPU or enable **AMD-V / SVM Mode** for AMD CPU
+3. Look for settings like CPU / Processor / Advanced Settings / System Configuration
+4. Go to any of the above available options and enable **VT-x** for Intel CPU or enable **AMD-V / SVM Mode** for AMD CPU
 
 ✅ How to Verify Virtualization is Enabled (**Windows**)
 
