@@ -47,9 +47,13 @@ Before you can create or run virtual machines, your computer’s processor must 
 ✅ How to Verify Virtualization is Enabled (**Windows**)
 
       * Open **Task Manager**
+      
       * Go to **Performance** → **CPU** tab
+      
       * Check the bottom-right corner
+      
       * It should say: “**Virtualization: Enabled**”
+      
       * If it shows “**Disabled**”, repeat the steps above
 
 ✅ How to Verify Virtualization is Enabled (**MacOS**)
