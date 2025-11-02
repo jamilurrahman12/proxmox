@@ -23,9 +23,9 @@ Before you can create or run virtual machines, your computer’s processor must 
 
     1. Restart Your Computer
     2. Enter BIOS/UEFI Setup: As soon as your computer starts (before Windows or macOS logo appears), press one of the following keys repeatedly:
-    Dell / ASUS / Lenovo / Acer: F2
-    HP: Esc or F10
-    MSI / Gigabyte: Del
+       * Dell / ASUS / Lenovo / Acer: F2
+       * HP: Esc or F10
+       * MSI / Gigabyte: Del
     (Tip: Watch for the message “Press F2/DEL to enter Setup” on boot screen.)
 
     3. Look for settings like CPU / Processor / Advanced Settings / System Configuration
@@ -33,11 +33,11 @@ Before you can create or run virtual machines, your computer’s processor must 
 
 ✅ How to Verify Virtualization is Enabled (Windows)
 
-    Open Task Manager.
-    Go to Performance → CPU tab.
-    Check the bottom-right corner.
-    It should say: “Virtualization: Enabled”
-    If it shows “Disabled”, repeat the steps above.
+    * Open Task Manager.
+    * Go to Performance → CPU tab.
+    * Check the bottom-right corner.
+    * It should say: “Virtualization: Enabled”
+    * If it shows “Disabled”, repeat the steps above.
 
 We can download the software from here.
 
