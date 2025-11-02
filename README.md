@@ -18,6 +18,7 @@ The following section provides step-by-step instructions to install VMware Works
 | **Internet Connection** | Required for download & updates                                    | Stable broadband      |
 
 ⚙️ Tip: Enable virtualization in BIOS/UEFI.
+
 Look for settings like Intel VT-x, Intel Virtualization Technology, or SVM Mode and enable them. AMD CPU requires AMD-V. Intel CPU requires VT-x
 
 We can download the software from here.
