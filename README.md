@@ -11,12 +11,14 @@ The following section provides step-by-step instructions to install VMware Works
 
 | Requirement             | Minimum                                                            | Recommended           |
 | ----------------------- | ------------------------------------------------------------------ | --------------------- |
-| **Operating System**    | Windows 10/11 (64-bit) or macOS (Intel/Apple Silicon)              | Latest updated OS     |
+| **Operating System**    | Windows 8/10/11 (64-bit) or macOS (Intel/Apple Silicon)            | Latest updated OS     |
 | **Processor**           | 2-core 64-bit CPU with virtualization support (Intel VT-x / AMD-V) | Quad-core or higher   |
-| **RAM**                 | 8 GB                                                               | 16 GB or more         |
+| **RAM**                 | 8 GB                                                               | 16 GB or more          |
 | **Disk Space**          | 50 GB free                                                         | 100 GB+ SSD preferred |
 | **Internet Connection** | Required for download & updates                                    | Stable broadband      |
 
+⚙️ Tip: Enable virtualization in BIOS/UEFI.
+Look for settings like Intel VT-x, Intel Virtualization Technology, or SVM Mode and enable them. AMD CPU requires AMD-V. Intel CPU requires VT-x
 
 We can download the software from here.
 
