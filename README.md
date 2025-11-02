@@ -75,10 +75,27 @@ You can check support with running the following command in the terminal:
     
 If your Mac returns a result without error (e.g., hw.optional.arm64: 1), your system fully supports virtualization.
 
+### Install VMware Workstation / Fusion
 
+Run the downloaded installer file (.exe file in windows; .dmg file in MacOS) and follow the installation wizard to finish installation.
 
+### Initial Setup of VMware Workstation / Fusion
 
+Launch VMware Workstation / Fusion
 
+Go to **Edit** → **Virtual Network Editor**
+
+It will open an editor wizard. Click on the "Change Settings" button to adjust any network configuration. We need to create/edit 2 types of network adapter. One (01) is **Host-only** type and another is **NAT** type.
+
+Click on **Host-only** virtual adapter and edit the settings as shown in the following screenshot.
+
+<img width="604" height="528" alt="image" src="https://github.com/user-attachments/assets/219d8514-c177-4be8-ac66-25ed57cfa724" />
+
+Click on **NAT** virtual adapter and edit the settings as shown in the following screenshots. 
+
+<img width="602" height="526" alt="image" src="https://github.com/user-attachments/assets/9168a8c0-3b99-4bca-b252-7689ee1371fb" />
+
+<img width="488" height="520" alt="image" src="https://github.com/user-attachments/assets/05897a72-f23c-4fb8-9505-5e4cbc09ed86" />
 
 
 ```bash
