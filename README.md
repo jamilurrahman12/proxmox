@@ -111,6 +111,16 @@ Here, we can't use '1' as a gateway, because the host machine uses '1' as its (v
 
 ### Provisioning Hardware (CPU, RAM, Disk, NIC) for Server-1/Node-1/Host -1
 
+### Proxmox ISO image Download
+
+### Attach the ISO as USB or CD/DVD and Install Proxmox on Server-1
+
+### Proxmox Dashboard (Graphical User Interface)
+
+### Host System Administration
+
+## Setting up Server-2 and Server-3
+
 
 ```bash
 git clone https://github.com/you/repo.git
