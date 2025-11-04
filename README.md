@@ -1,6 +1,11 @@
 # Open Cloud Revolution: Hands-On Private Cloud with PROXMOX VE
 This guide prepares you to administer a full-fledge cloud infrastructure for an organization of any size.
 
+## Lab Plan Architecture
+
+<img width="2445" height="1429" alt="image" src="https://github.com/user-attachments/assets/1c61d951-50d7-406b-85ce-236621d71545" />
+
+
 ## VMware Workstation Installation and Setup
 
 For Hosting 3-Node Proxmox Cluster
@@ -101,7 +106,11 @@ It will open an editor wizard. Click on the "Change Settings" button to adjust a
 
 Here we can't use '1' as gateway, because host machine uses '1' as it's (virtual adapter) gateway. That's why we need to set '2' or any number (below 255). Obviously, we need to set this IP as gateway within any VMs (Proxmox nodes).
 
-### Single Proxmox node Setup
+## Single Proxmox node Setup
+
+### Hardware Requirements
+
+
 
 ```bash
 git clone https://github.com/you/repo.git
