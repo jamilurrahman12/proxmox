@@ -119,13 +119,84 @@ Here, we can't use '1' as a gateway, because the host machine uses '1' as its (v
 
 ### Host System Administration
 
+## Identity and Access Management (IAM)
+
+•	Basics Authentication & Authorization
+•	Securing The root Account
+•	Permission Management & Privileges
+•	Multi-Factor Authentication for Users
+•	Groups and Roles
+
+
+## QEMU/KVM Virtual Machines
+
+## Proxmox Container Toolkit
+
 ## Provisioning Server-2 and Server-3
 
-## Cluster Manager
+## Cluster Manager: Proxmox VE Cluster setup
+
+•	Clustering Overview
+•	Create Cluster
+•	Join Cluster Nodes
+
 
 ### Proxmox Cluster File System (pmxcfs)
 
+## Proxmox VE Storage
 
+### Deploy Hyper-Converged Ceph Cluster
+
+## High Availability (HA) - PVE HA Manager
+
+## Software-Defined Network
+
+## Testing
+
+### Live Migration
+### High Availability (HA)
+
+
+## Migration
+
+### VMware to Proxmox
+### AWS EC2 to Proxmox
+### Proxmox to VMware
+
+
+## Proxmox VE Firewall
+
+•	Iptables/Firewall Overview
+•	Generated Iptables Rules
+•	Host-Specific Firewall Rules
+•	VM Specific Firewall Rules
+•	Security Group Implementation
+•	Proxmox VE Hosts Security
+•	Filter Remote IPs
+
+
+## Disaster Recovery: DC-DR Concept
+
+### VM / Storage Replication
+
+### Local Backup Procedure
+
+     Backup Jobs & Retention Policy
+
+### VM Snapshot & VM Clone
+
+### VM Restore & Snapshot Revert
+
+
+## Proxmox Backup Server (PBS): Open-Source Enterprise Backup Solution
+
+### Installtion and Configuration
+
+### Integration with Proxmox Cluster
+
+### Backup Job creation and management
+
+### Restoration
 
 ```bash
 git clone https://github.com/you/repo.git
