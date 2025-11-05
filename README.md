@@ -119,7 +119,12 @@ Here, we can't use '1' as a gateway, because the host machine uses '1' as its (v
 
 ### Host System Administration
 
-## Setting up Server-2 and Server-3
+## Provisioning Server-2 and Server-3
+
+## Cluster Manager
+
+### Proxmox Cluster File System (pmxcfs)
+
 
 
 ```bash
