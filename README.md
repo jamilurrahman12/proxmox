@@ -3,7 +3,8 @@ This guide prepares you to administer a full-fledge cloud infrastructure for an 
 
 ## Lab Plan Architecture
 
-<img width="2445" height="1429" alt="image" src="https://github.com/user-attachments/assets/1c61d951-50d7-406b-85ce-236621d71545" />
+<img width="970" height="571" alt="image" src="https://github.com/user-attachments/assets/1119e349-bd6c-4d1a-9bf2-9ce906ac9b42" />
+
 
 
 ## VMware Workstation Installation and Setup
