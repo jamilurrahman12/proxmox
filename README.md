@@ -135,7 +135,7 @@ Alternatively, Proxmox VE can be installed on top of an existing Debian system. 
 ### Proxmox ISO image Download
 
 Download the Proxmox installer ISO image from: https://drive.bdren.net.bd/index.php/s/BRoHfoetjz5miYC
-or, https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso
+  or, https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso
 
 ### Attach the ISO as USB or CD/DVD and Install Proxmox on Server-1
 
