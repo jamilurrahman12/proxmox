@@ -94,13 +94,13 @@ It will open an editor wizard. Click on the "Change Settings" button to adjust a
 
 1. Click on **Host-only** virtual adapter and edit the settings as shown in the following screenshot.
 
-<p align="center">
-<img width="650" height="600" alt="image" src="https://github.com/user-attachments/assets/219d8514-c177-4be8-ac66-25ed57cfa724" />
-</p>
+<div align="center">
+<img width="600" height="600" alt="image" src="https://github.com/user-attachments/assets/219d8514-c177-4be8-ac66-25ed57cfa724" />
+</div>
 
 2. Click on **NAT** virtual adapter and edit the settings as shown in the following screenshots. 
 
-<img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/9168a8c0-3b99-4bca-b252-7689ee1371fb" />
+<img width="600" height="500" alt="image" src="https://github.com/user-attachments/assets/9168a8c0-3b99-4bca-b252-7689ee1371fb" />
 
 Here, we can't use '1' as a gateway, because the host machine uses '1' as its (virtual adapter) gateway. That's why we need to set '2' or any number (below 255). Obviously, we need to set this IP as the gateway within any VMs (Proxmox nodes).
 
