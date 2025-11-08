@@ -112,7 +112,15 @@ Click on the **Nat Settings** button and enter the gateway address. Here, we can
 
 ## Single Proxmox node Setup
 
-### Hardware Requirements
+### Hardware/System Requirements
+
+  CPU: Intel 64 or AMD64 with Intel VT/AMD-V CPU flag.
+
+  RAM: 2 GB RAM, plus additional RAM needed for guests
+
+  Hard disk
+
+  At least One network card (NIC)
 
 ### Provisioning Hardware (CPU, RAM, Disk, NIC) for Server-1/Node-1/Host -1
 
@@ -170,6 +178,8 @@ Click on the **Nat Settings** button and enter the gateway address. Here, we can
 
 
 ## Proxmox VE Firewall
+
+The integrated firewall allows you to filter network packets on any VM or Container interface. Common sets of firewall rules can be grouped into “security groups”.
 
 •	Iptables/Firewall Overview
 •	Generated Iptables Rules
