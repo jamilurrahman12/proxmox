@@ -113,7 +113,7 @@ Click on the **Nat Settings** button and enter the gateway address. Here, we can
 
 ## Single Proxmox node Setup
 
-Installing with the provided ISO is the recommended method for new and existing users. The installer will guide you through the setup, allowing you to partition the local disk(s), apply basic system configurations (such as time zone, language, and network settings), and install all required packages. 
+Installing from the Proxmox ISO is the recommended method for both new and existing users. The installer will guide you through the setup, allowing you to partition the local disk(s), apply basic system configurations (such as time zone, language, and network settings), and install all required packages. 
 
 Alternatively, Proxmox VE can be installed on top of an existing Debian system. This option is only recommended for advanced users, as detailed knowledge of Proxmox VE is required.
 
