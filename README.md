@@ -90,11 +90,11 @@ Launch VMware Workstation / Fusion
 
 Go to **Edit** → **Virtual Network Editor**
 
-It will open an editor wizard. Click on the "Change Settings" button to adjust any network configuration. We need to create/edit 2 types of network adapter. One (01) is **Host-only** type and another is **NAT** type.
+It will open an editor wizard. Click on the "Change Settings" button to adjust any network configuration. We need to create/edit 2 types of network adapters. One (01) is **Host-only** type and another is **NAT** type.
 
 1. Click on **Host-only** virtual adapter and edit the settings as shown in the following screenshot.
 
-<img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/219d8514-c177-4be8-ac66-25ed57cfa724" />
+<img width="800" height="600" text-align= "center" alt="image" src="https://github.com/user-attachments/assets/219d8514-c177-4be8-ac66-25ed57cfa724" />
 
 2. Click on **NAT** virtual adapter and edit the settings as shown in the following screenshots. 
 
