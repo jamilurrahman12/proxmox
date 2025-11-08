@@ -100,12 +100,15 @@ It will open an editor wizard. Click on the "Change Settings" button to adjust a
 
 2. Click on **NAT** virtual adapter and edit the settings as shown in the following screenshots. 
 
+<div align="center">
 <img width="600" height="500" alt="image" src="https://github.com/user-attachments/assets/9168a8c0-3b99-4bca-b252-7689ee1371fb" />
+</div>
 
 Here, we can't use '1' as a gateway, because the host machine uses '1' as its (virtual adapter) gateway. That's why we need to set '2' or any number (below 255). Obviously, we need to set this IP as the gateway within any VMs (Proxmox nodes).
 
-<img width="1000" height="1000" alt="image" src="https://github.com/user-attachments/assets/05897a72-f23c-4fb8-9505-5e4cbc09ed86" />
-
+<div align="center">
+<img width="600" height="500" alt="image" src="https://github.com/user-attachments/assets/05897a72-f23c-4fb8-9505-5e4cbc09ed86" />
+</div>
 
 ## Single Proxmox node Setup
 
