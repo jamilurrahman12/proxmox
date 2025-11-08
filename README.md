@@ -114,13 +114,13 @@ Click on the **Nat Settings** button and enter the gateway address. Here, we can
 
 ### Hardware/System Requirements
 
-  CPU: Intel 64 or AMD64 with Intel VT/AMD-V CPU flag.
+•     **CPU:** Intel 64 or AMD64 with Intel VT/AMD-V CPU flag.
 
-  RAM: 2 GB RAM, plus additional RAM needed for guests
+•     **RAM:** 2 GB RAM, plus additional RAM needed for guests
 
-  Hard disk
+•     **Hard disk:** 20 GB
 
-  At least One network card (NIC)
+•     At least one network card (NIC)
 
 ### Provisioning Hardware (CPU, RAM, Disk, NIC) for Server-1/Node-1/Host -1
 
