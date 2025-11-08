@@ -94,7 +94,9 @@ It will open an editor wizard. Click on the "Change Settings" button to adjust a
 
 1. Click on **Host-only** virtual adapter and edit the settings as shown in the following screenshot.
 
-<img width="800" height="600" text-align= "center" alt="image" src="https://github.com/user-attachments/assets/219d8514-c177-4be8-ac66-25ed57cfa724" />
+<p align="center">
+<img width="650" height="600" alt="image" src="https://github.com/user-attachments/assets/219d8514-c177-4be8-ac66-25ed57cfa724" />
+</p>
 
 2. Click on **NAT** virtual adapter and edit the settings as shown in the following screenshots. 
 
