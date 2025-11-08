@@ -104,7 +104,7 @@ It will open an editor wizard. Click on the "Change Settings" button to adjust a
 <img width="600" height="500" alt="image" src="https://github.com/user-attachments/assets/9168a8c0-3b99-4bca-b252-7689ee1371fb" />
 </div>
 
-Here, we can't use '1' as a gateway, because the host machine uses '1' as its (virtual adapter) gateway. That's why we need to set '2' or any number (below 255). Obviously, we need to set this IP as the gateway within any VMs (Proxmox nodes).
+Click on the **Nat Settings** button and enter the gateway address. Here, we can't use '1' as a gateway, because the host machine (your laptop) uses '1' as its (virtual adapter) gateway. That's why we need to set '2' or any number (below 255). Obviously, we must use the same IP as the gateway within any VMs (Proxmox nodes).
 
 <div align="center">
 <img width="600" height="600" alt="image" src="https://github.com/user-attachments/assets/05897a72-f23c-4fb8-9505-5e4cbc09ed86" />
