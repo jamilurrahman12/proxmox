@@ -89,7 +89,9 @@ Run the downloaded installer file (.exe file in windows; .dmg file in MacOS) and
 
 Launch VMware Workstation / Fusion
 
-Go to **Edit** → **Virtual Network Editor**
+In workstation, Go to **Edit** --> **Virtual Network Editor**
+
+In Fusion, Go to **Settings** --> **Network**
 
 It will open an editor wizard. Click on the "Change Settings" button to adjust any network configuration. We need to create/edit 2 types of network adapters. One (01) is **Host-only** type and another is **NAT** type.
 
@@ -120,6 +122,12 @@ Alternatively, Proxmox VE can be installed on top of an existing Debian system. 
     apt-get update
     apt-get install proxmox-ve
 
+### Proxmox ISO image Download
+
+Download the Proxmox installer ISO image from: https://drive.bdren.net.bd/index.php/s/BRoHfoetjz5miYC
+
+or, https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso
+
 ### Hardware/System Requirements
 
 •     **CPU:** Intel 64 or AMD64 with Intel VT/AMD-V CPU flag.
@@ -132,13 +140,29 @@ Alternatively, Proxmox VE can be installed on top of an existing Debian system. 
 
 ### Provisioning Hardware (CPU, RAM, Disk, NIC) for Server-1/Node-1/Host -1
 
-### Proxmox ISO image Download
+Launch VMware Workstation/Fusion app and create a Virtual machine. While choosing the Operating system and its type, select Linux and Debian 13.x 64-bit, depending on the Proxmox version you are using. Proxmox 9 utilizes Debian 13 (Trixie) as its base operating system, whereas Proxmox 8 employed Debian 12 (Bookworm).
 
-Download the Proxmox installer ISO image from: https://drive.bdren.net.bd/index.php/s/BRoHfoetjz5miYC
+<img width="635" height="528" alt="image" src="https://github.com/user-attachments/assets/dae2db98-8780-47d8-8c81-7eb26c712cbc" />
 
-or, https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso
+Create a new virtual disk (consolidated) with a minimum capacity of 20GB for installing the ISO on this disk.
 
-### Attach the ISO as USB or CD/DVD and Install Proxmox on Server-1
+<img width="637" height="528" alt="image" src="https://github.com/user-attachments/assets/6ebd83ef-04f6-4b9f-8688-77b4640e99fd" />
+
+Set the Name of this virtual machine to **PVE-1 **or Server-1/Node-1/Host -1. Select the CPU, RAM, and other components according to your available resources, ensuring they meet the minimum requirements. Particularly, go to **Network Adapter** and select the adapter that you previously created (NAT type).
+
+<img width="637" height="421" alt="image" src="https://github.com/user-attachments/assets/f1bf8902-dcbb-4869-beb6-bbcd1d23567d" />
+
+### Attach the ISO as CD/DVD and Install Proxmox on Server-1
+
+Go to CD/DVD section and select the downloaded ISO file.
+
+<img width="637" height="201" alt="image" src="https://github.com/user-attachments/assets/6461b1e2-71ff-4b4e-83ee-db734117adae" />
+
+Power ON the VM (PVE-1). After choosing the correct entry (for example, Boot from USB), the Proxmox VE menu will be displayed, and one of the following options can be selected. Choose **Install Proxmox VE (Graphical)**.
+
+
+
+
 
 ### Proxmox Dashboard (Graphical User Interface)
 
