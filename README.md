@@ -165,7 +165,7 @@ Set the Name of this virtual machine to **PVE-1 **or Server-1/Node-1/Host -1. Cr
 Select the CPU, RAM, and other components according to your available resources, ensuring they meet the minimum requirements. Particularly, go to **Network Adapter** and select the custom adapter that you previously created (**VMnet8 - NAT**).
 
 <div align="center">
-<img width="758" height="733" alt="image" src="https://github.com/user-attachments/assets/6579cd4a-0757-462e-8bc1-78050afdf531" />
+<img width="754" height="729" alt="image" src="https://github.com/user-attachments/assets/06b23d82-7c7d-4825-b20d-26e99a2d4457" />
 </div>
 
 Go to **Processors** section and enable the option named **Virtualize Intel VT-x/EPT or AMD-V/RVI**. It will enable this VM (PVE-1) to create/host virtual machines on top of it.
@@ -256,6 +256,37 @@ Proxmox provides updates on a regular basis for all repositories. After adding t
     apt-get dist-upgrade
 
 ### Network Configuration
+
+Proxmox VE is using the Linux network stack. This provides a lot of flexibility on how to set up the network on the Proxmox VE nodes. The configuration can be done either via the GUI, or by manually editing the file /etc/network/interfaces, which contains the whole network configuration. 
+
+A Linux bridge interface (commonly called vmbrX) is needed to connect guests to the underlying physical network. It can be thought of as a virtual switch which the guests and physical interfaces are connected to. This section provides how the network can be set up to accommodate different use cases like redundancy with a Bond and VLAN setup. 
+
+The Software Defined Network is an option for more complex virtual networks in Proxmox VE clusters.
+
+####  Choosing network configurations
+
+There are basically 3 types of network we need. 
+
+  1.  Management and Cluster communication
+  2.  VM/CT network
+  3.  Ceph Cluster
+
+In VMware workstation panel, under **Settings** option of the VM (PVE-1), add 3 more **Network Adapter** and configure those adapters as shown in the following screenshot.
+1st 3 adapters >> VMnet8 (NAT)
+4th adapter >> VMnet1 (Host-only)
+
+<div align="center">
+<img width="756" height="731" alt="image" src="https://github.com/user-attachments/assets/ba8f40a6-9d13-48ac-b9d6-234c4aac797f" />
+</div>
+
+After successful adding those network adapters, go to Proxmox dashboard and select Network menu. You will see 4 network interfaces listed there.
+
+1 interface (ens33) will be dedicated for Management and Cluster communication.
+2 interfaces (ens37 and ens38) will be binded and dedicated for VM/CT network.
+4th interface (ens39) will be dedicated for Ceph cluster communication.
+
+Create a Linux Bond with 2 interfaces (ens37 and ens38) and deploy a Bridge with that Bond for connecting VM/CT. Configure the whole Networks as shown in the following screenshot.
+
 
 ### Certificate Management
 
