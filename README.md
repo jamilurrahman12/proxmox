@@ -226,20 +226,38 @@ Initially, you will get Browser Warning for using self-signed certificate. We'll
 
 Log in using the root (realm PAM) username and the password chosen during installation.
 
-Upload your subscription key to gain access to the Enterprise repository. Otherwise, you will need to set up one of the public, non-subscribed package repositories to get updates for security fixes, bug fixes, and new features.
+### Host System Administration
 
-Select the node and go to Repositories menu. There, you can disable enterprise repository for both pve & ceph sources, and enable **pve-no-subscription** repository. 
+The following sections will focus on common virtualization tasks and explain the Proxmox VE specifics regarding the administration and management of the host machine.
+
+### Package Repositories
+
+Proxmox VE uses APT as its package management tool like any other Debian-based system. Repositories are a collection of software packages, they can be used to install new software, but are also important to get new updates for security fixes, bug fixes, and new features.
+
+In Proxmox VE, there are mainly 2 types of repositories available.
+
+1. Enterprise : Upload your active subscription key to gain access to the Enterprise repository. 
+2. No Subscription: If you don't buy a subscription. 
+
+It is to be explicitely mentioned that there is no difference between those 2 subscription plan in terms of functionality and features. Rather, the enterprise subscription will ensure the most stable software repository and get prompt technical support.
+
+Select the node and go to Repositories menu. There, you can disable enterprise repository for both pve & ceph sources, and enable **pve-no-subscription** and **ceph-squid-no-subscription** repository. 
 
 <div align="center">
-<img width="1194" height="379" alt="image" src="https://github.com/user-attachments/assets/4ca9d777-6eac-412a-a7c0-ce456a486f2d" />
+<img width="1196" height="410" alt="image" src="https://github.com/user-attachments/assets/793462f1-00f1-4d0f-be43-7bc7b54009d2" />
 </div>
 
-After adding the No-Subscription repository, Click on **Reload** button. Then, go to Shell and update the repositories.
+
+### System Software Updates
+
+Proxmox provides updates on a regular basis for all repositories. After adding the No-Subscription repositories, Click on **Reload** button. Then, go to **Shell** and update the repositories.
 
     apt-get update
+    apt-get dist-upgrade
 
+### Network Configuration
 
-### Host System Administration
+### Certificate Management
 
 ## Identity and Access Management (IAM)
 
