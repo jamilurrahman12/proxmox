@@ -302,6 +302,12 @@ iface lo inet loopback
 
 iface ens33 inet manual
 
+iface ens37 inet manual
+
+iface ens38 inet manual
+
+iface ens39 inet manual
+
 auto vmbr0
 iface vmbr0 inet static
         address 10.10.0.10/24
@@ -310,10 +316,28 @@ iface vmbr0 inet static
         bridge-stp off
         bridge-fd 0
 
-
 source /etc/network/interfaces.d/*
 ```
 
+In Shell/CLI, change this file according to the below - 
+
+```bash
+auto lo
+iface lo inet loopback
+
+auto ens33
+iface ens33 inet static
+        address 10.10.0.15/24
+        gateway 10.10.0.2
+
+iface ens37 inet manual
+
+iface ens38 inet manual
+
+iface ens39 inet manual
+
+source /etc/network/interfaces.d/*
+```
 
 Create a Linux Bond with two interfaces (ens37 and ens38) and deploy a Bridge with that Bond for connecting VMs/CTs. Configure the whole network as shown in the following screenshot.
 
