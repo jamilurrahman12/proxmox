@@ -360,14 +360,16 @@ A bond is used to make the network fail-safe.
 
 Bridges are like physical network switches implemented in software. All virtual guests can share a single bridge, or you can create multiple bridges to separate network domains. 
 
-<img width="598" height="290" alt="image" src="https://github.com/user-attachments/assets/c5a33d44-1cf8-48b7-b2f1-3a7b7b10d49b" />
+<img width="595" height="291" alt="image" src="https://github.com/user-attachments/assets/3c59429a-6d6f-429f-b412-c27c32c2b315" />
+
 
 Click on **Apply Configuration** button. The final network configuration looks like -
 
-<img width="1214" height="221" alt="image" src="https://github.com/user-attachments/assets/c35bb873-ac18-4bc4-b29a-5ad0a75083f3" />
+<img width="1214" height="220" alt="image" src="https://github.com/user-attachments/assets/fe3bd39c-9553-4450-9adc-874d06dd5faa" />
 
 
-Moreover, the whole network configuration might look like in any production cloud - 
+
+Moreover, in any production Proxmox cloud environment the whole network configuration might look like - 
 
 
 *** we'll configure 4th interface (ens39) for Ceph network later. 
