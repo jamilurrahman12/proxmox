@@ -369,7 +369,7 @@ Click on **Apply Configuration** button. The final network configuration looks l
 
 
 
-Moreover, in any production Proxmox cloud environment the whole network configuration might look like - 
+Moreover, in any production Proxmox cloud environment, the whole network configuration might look like - 
 
 
 *** we'll configure 4th interface (ens39) for Ceph network later. 
@@ -377,7 +377,54 @@ Moreover, in any production Proxmox cloud environment the whole network configur
 
 ### Certificate Management
 
-## Identity and Access Management (IAM)
+Each Proxmox VE cluster creates by default its own (self-signed) Certificate Authority (CA) and generates a certificate for each node which gets signed by the aforementioned CA.
+
+pveproxy daemon is responsible for certificates.
+
+#### Methods for certificates
+
+You have the following options for issuing certificate used by pveproxy:
+
+* By default, a node-specific certificate is used. This certificate is signed by the cluster CA and, therefore, is not automatically trusted by browsers and operating systems. 
+
+* Upload Custom Certificate  (e.g., signed by a commercial CA). 
+
+* Use ACME to get a trusted certificate with automatic renewal. One of the ACME providers is Let’s Encrypt.
+
+#### Validation procedures
+
+ACME supports 2 types of validation
+
+http-01 challenge: using a built-in web server
+dns-01 challenges: using a DNS plugin
+
+
+For http-01 challenges:
+
+You have to accept the ToS of Let’s Encrypt to register an account. 
+Port 80 of the node needs to be reachable from the internet. 
+There must be no other listener on port 80. 
+The requested (sub)domain needs to resolve to a public IP of the Node. 
+
+
+
+Proxmox VE includes an implementation of the Automatic Certificate Management Environment ACME protocol, allowing Proxmox VE admins to use an ACME provider like Let’s Encrypt for easy setup of TLS certificates, which are accepted and trusted on modern operating systems and web browsers out of the box.
+
+ACME client supports validation of http-01 challenges using a built-in web server and validation of dns-01 challenges using a DNS plugin.
+
+<img width="1059" height="317" alt="image" src="https://github.com/user-attachments/assets/e92e3436-08fc-4368-ba08-49837d715c9d" />
+
+
+## Identity and Access Management (IAM) - User Management
+
+Proxmox VE supports multiple authentication sources
+
+Linux PAM standard authentication
+Integrated Proxmox VE authentication server
+LDAP server
+Microsoft Active Directory
+OpenID Connect Server
+
 
 •	Basics Authentication & Authorization
 •	Securing The root Account
@@ -394,10 +441,51 @@ Moreover, in any production Proxmox cloud environment the whole network configur
 
 ## Cluster Manager: Proxmox VE Cluster setup
 
+The Proxmox VE cluster manager **pvecm** is a tool to create a group of physical servers. Such a group is called a cluster. We use the Corosync Cluster Engine for reliable group communication. There’s no explicit limit for the number of nodes in a cluster. 
+
+Because we use the Proxmox cluster file system (pmxcfs), you can connect to any node to manage the entire cluster. Each node can manage the entire cluster. There is no need for a dedicated manager node.
+
+### Preparing Nodes
+
+First, install Proxmox VE on all nodes. Ensure that each node is installed with the final hostname and IP address configuration. Changing the hostname and IP is not possible after cluster creation.
+
 •	Clustering Overview
 •	Create Cluster
-•	Join Cluster Nodes
 
+
+
+You can either create a cluster on the console (login via ssh), or through the API using the Proxmox VE web interface (Datacenter → Cluster).
+Note: Use a unique name for your cluster. This name cannot be changed later. The cluster name follows the same rules as node names.
+
+Under Datacenter → Cluster, click on Create Cluster. Enter the cluster name and select a network connection from the drop-down list to serve as the main cluster network (Link 0). It defaults to the IP resolved via the node’s hostname.
+
+
+•	Adding Nodes to the Cluster
+
+All existing configuration in /etc/pve is overwritten when joining a cluster. In particular, a joining node cannot hold any guests, since guest IDs could otherwise conflict, and the node will inherit the cluster’s storage configuration. To join a node with existing guest, as a workaround, you can create a backup of each guest (using vzdump) and restore it under a different ID after joining. If the node’s storage layout differs, you will need to re-add the node’s storages, and adapt each storage’s node restriction to reflect on which nodes the storage is actually available.
+
+Log in to the web interface on an existing cluster node. Under Datacenter → Cluster, click the Join Information button at the top. Then, click on the button Copy Information. Alternatively, copy the string from the Information field manually.
+
+
+Next, log in to the web interface on the node you want to add. Under Datacenter → Cluster, click on Join Cluster. Fill in the Information field with the Join Information text you copied earlier. Most settings required for joining the cluster will be filled out automatically. For security reasons, the cluster password has to be entered manually.
+
+
+
+After clicking the Join button, the cluster join process will start immediately. After the node has joined the cluster, its current node certificate will be replaced by one signed from the cluster certificate authority (CA). This means that the current session will stop working after a few seconds. You then might need to force-reload the web interface and log in again with the cluster credentials.
+
+Now your node should be visible under Datacenter → Cluster.
+
+In Shell/CLI, you can run the following to see the cluster status and nodes.
+
+    pvecm status
+    pvecm nodes
+
+### Quorum
+
+Proxmox VE use a quorum-based technique to provide a consistent state among all cluster nodes.
+
+A quorum is the minimum number of votes that a distributed transaction has to obtain in order to be allowed to perform an operation in a distributed system.
+Proxmox VE assigns a single vote to each node by default.
 
 ### Proxmox Cluster File System (pmxcfs)
 
