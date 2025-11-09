@@ -182,12 +182,38 @@ Power ON the VM (PVE-1). After initial booting, the Proxmox VE menu will be disp
 <img width="1007" height="750" alt="image" src="https://github.com/user-attachments/assets/e16f77db-7f4e-40a6-9967-df44c8910b66" />
 </div>
 
-The first step is to read their EULA (End User License Agreement). Following this, you can select the target hard disk(s) for the installation. By default, the whole disk(s) is used and all existing data is removed. The **Options** button lets you select the target file system, which defaults to ext4. Change it to xfs file system and the installer will use LVM.
+The first step is to read and accept their EULA (End User License Agreement). Following this, you can select the target hard disk(s) for the installation. By default, the whole disk(s) is used and all existing data is removed. The **Options** button lets you select the target file system, which defaults to ext4. Change it to xfs file system and the installer will use LVM.
+
+<div align="center">
+<img width="1268" height="789" alt="image" src="https://github.com/user-attachments/assets/584f8c70-a143-4df9-9be1-f7a41ab56db0" />
+</div>
+
+The next page asks for basic configuration options like your location, time zone, and keyboard layout. The location is used to select a nearby download server, in order to increase the speed of updates. The installer is usually able to auto-detect these settings, so you only need to change them in rare situations when auto-detection fails, or when you want to use a keyboard layout not commonly used in your country.
+
+<div align="center">
+<img width="1144" height="775" alt="image" src="https://github.com/user-attachments/assets/df813619-2d86-472a-9779-a62505a3e586" />
+</div>
+
+Next the password of the superuser (root) and an email address needs to be specified. The password must consist of at least 8 characters. It’s highly recommended to use a stronger password. All notification emails will be sent to the specified email address as system administrator.
+
+<div align="center">
+<img width="861" height="613" alt="image" src="https://github.com/user-attachments/assets/0293f177-a02f-463e-b3c7-d6a380c71dea" />
+</div>
+
+The last step is the network configuration. Network interfaces that are UP show a green-filled circle in front of their name in the drop down menu. Please note that during installation you can either specify an IPv4 or IPv6 address, but not both. To configure a dual stack node, add additional IP addresses after the installation.
+
+<div align="center">
+<img width="1270" height="770" alt="image" src="https://github.com/user-attachments/assets/c70d28c6-0c3d-4f51-834e-9e696f68532a" />
+</div>
 
 
+The next step shows a summary of the previously selected options. Please re-check every setting and use the Previous button if a setting needs to be changed. 
 
+<div align="center">
+<img width="1275" height="778" alt="image" src="https://github.com/user-attachments/assets/88817614-0efa-4e33-80ff-530481001863" />
+</div>
 
-
+After clicking Install, the installer will begin to format the disks and copy packages to the target disk(s). Please wait until this step has finished; then remove the installation medium and restart your system. Copying the packages usually takes several minutes, mostly depending on the speed of the installation medium and the target disk performance.
 
 
 ### Proxmox Dashboard (Graphical User Interface)
