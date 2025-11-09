@@ -216,7 +216,28 @@ The next step shows a summary of the previously selected options. Please re-chec
 After clicking Install, the installer will begin to format the disks and copy packages to the target disk(s). Please wait until this step has finished; then remove the installation medium and restart your system. Copying the packages usually takes several minutes, mostly depending on the speed of the installation medium and the target disk performance.
 
 
-### Proxmox Dashboard (Graphical User Interface)
+### Accessing Proxmox Dashboard (Graphical User Interface)
+
+After a successful installation and reboot of the system you can use the Proxmox VE web interface for further configuration.
+
+Point your browser to the IP address given during the installation and port 8006, for instance: https://10.10.0.10:8006
+
+Initially, you will get Browser Warning for using self-signed certificate. We'll generate Let's Encrypt commercial certificate later. For now, access the dashboard by clicking on **Advanced** option; then **Accept the Rist and Continue**.
+
+Log in using the root (realm PAM) username and the password chosen during installation.
+
+Upload your subscription key to gain access to the Enterprise repository. Otherwise, you will need to set up one of the public, non-subscribed package repositories to get updates for security fixes, bug fixes, and new features.
+
+Select the node and go to Repositories menu. There, you can disable enterprise repository for both pve & ceph sources, and enable **pve-no-subscription** repository. 
+
+<div align="center">
+<img width="1194" height="379" alt="image" src="https://github.com/user-attachments/assets/4ca9d777-6eac-412a-a7c0-ce456a486f2d" />
+</div>
+
+After adding the No-Subscription repository, Click on **Reload** button. Then, go to Shell and update the repositories.
+
+    apt-get update
+
 
 ### Host System Administration
 
