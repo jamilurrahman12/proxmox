@@ -284,17 +284,19 @@ After successfully adding those network adapters, go back to the Proxmox dashboa
 <img width="1363" height="329" alt="image" src="https://github.com/user-attachments/assets/987fed55-6fce-4a9c-85e8-13da43bf6c61" />
 
 
-1 interface (ens33) will be dedicated to Management and Cluster communication.
+* 1 interface (ens33) will be dedicated to Management and Cluster communication.
 
-2 interfaces (ens37 and ens38) will be bound and dedicated for VM/CT network.
+* 2 interfaces (ens37 and ens38) will be bound and dedicated for VM/CT network.
 
-The 4th interface (ens39) will be dedicated to Ceph cluster communication.
+* The 4th interface (ens39) will be dedicated to Ceph cluster communication.
 
 The number of interfaces above depends on the available NIC card you have. In production, each type of network should have redundant interfaces.
 
+##### Step 1
+
 First, we need to set the management IP correctly. By default, the installation program creates a single bridge named **vmbr0**, which is connected to the first Ethernet card and the management IP is set on it. To separate networks, we need to set the management IP address directly on an interface (ens33). You can do it via either GUI or CLI.
 
-The corresponding configuration in /etc/network/interfaces looks like this
+The shipped configuration in /etc/network/interfaces looks like this - 
 
 ```bash
 auto lo
@@ -327,7 +329,7 @@ iface lo inet loopback
 
 auto ens33
 iface ens33 inet static
-        address 10.10.0.15/24
+        address 10.10.0.10/24
         gateway 10.10.0.2
 
 iface ens37 inet manual
@@ -339,7 +341,35 @@ iface ens39 inet manual
 source /etc/network/interfaces.d/*
 ```
 
-Create a Linux Bond with two interfaces (ens37 and ens38) and deploy a Bridge with that Bond for connecting VMs/CTs. Configure the whole network as shown in the following screenshot.
+After modifying the file, save it and restart the network service.
+
+    service networking restart
+
+Reload the browser page, and now it looks like - 
+
+<img width="1150" height="228" alt="image" src="https://github.com/user-attachments/assets/a108e40d-d132-42ca-b417-efd83558885e" />
+
+##### Step 2
+
+Create a **Linux Bond** with two interfaces (ens37 and ens38), and then create a **Linux Bridge** using that already created Bond to connect VMs/CTs' network. 
+
+A bond is used to make the network fail-safe.
+
+<img width="598" height="319" alt="image" src="https://github.com/user-attachments/assets/42a8e046-74d1-484e-bc0c-d60d3087dd78" />
+
+Bridges are like physical network switches implemented in software. All virtual guests can share a single bridge, or you can create multiple bridges to separate network domains. 
+
+<img width="598" height="290" alt="image" src="https://github.com/user-attachments/assets/c5a33d44-1cf8-48b7-b2f1-3a7b7b10d49b" />
+
+Click on **Apply Configuration** button. The final network configuration looks like -
+
+<img width="1214" height="221" alt="image" src="https://github.com/user-attachments/assets/c35bb873-ac18-4bc4-b29a-5ad0a75083f3" />
+
+
+Moreover, the whole network configuration might look like in any production cloud - 
+
+
+*** we'll configure 4th interface (ens39) for Ceph network later. 
 
 
 ### Certificate Management
