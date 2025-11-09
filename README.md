@@ -101,19 +101,19 @@ In Fusion, Go to **Settings** --> **Network**
 
 It will open an editor wizard. Click on the "Change Settings" button to adjust any network configuration. We need to create/edit 2 types of network adapters. One (01) is **Host-only** type and another is **NAT type**.
 
-1. Click on **Host-only** virtual adapter and edit the settings as shown in the following screenshot.
+1. **VMnet1:** Click on **Host-only** virtual adapter and edit the settings as shown in the following screenshot.
 
 <div align="center">
 <img width="600" height="600" alt="image" src="https://github.com/user-attachments/assets/219d8514-c177-4be8-ac66-25ed57cfa724" />
 </div>
 
-2. Click on **NAT** virtual adapter and edit the settings as shown in the following screenshots. 
+2. **VMnet8:** Click on **NAT** virtual adapter and edit the settings as shown in the following screenshots. 
 
 <div align="center">
 <img width="600" height="500" alt="image" src="https://github.com/user-attachments/assets/9168a8c0-3b99-4bca-b252-7689ee1371fb" />
 </div>
 
-Click on the **Nat Settings** button and enter the gateway address. Here, we can't use '1' as a gateway, because the host machine (your laptop) uses '1' as its (virtual adapter) gateway. That's why we need to set '2' or any number (below 255). Obviously, we must use the same IP as the gateway within any VMs (Proxmox nodes).
+Click on the **NAT Settings** button and enter the gateway address. Here, we can't use '1' as a gateway, because the host machine (your laptop) uses '1' as its (virtual adapter) gateway. That's why we need to set '2' or any number (below 255). Obviously, we must use the same IP as the gateway within any VMs (Proxmox nodes).
 
 <div align="center">
 <img width="600" height="600" alt="image" src="https://github.com/user-attachments/assets/05897a72-f23c-4fb8-9505-5e4cbc09ed86" />
