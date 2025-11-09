@@ -5,7 +5,7 @@ This guide prepares you to administer a full-fledge cloud infrastructure for an 
 
 <img width="970" height="571" alt="image" src="https://github.com/user-attachments/assets/1119e349-bd6c-4d1a-9bf2-9ce906ac9b42" />
 
-
+In our lab, we will use VMware workstation/Fusion for provisioning the required servers.
 
 ## VMware Workstation Installation and Setup
 
@@ -13,21 +13,14 @@ For Hosting 3-Node Proxmox Cluster
 
 The following section provides step-by-step instructions to install VMware Workstation on your computer. VMware Workstation allows you to create and manage virtual machines (VMs) — in this case, we’ll use it to host a 3-node Proxmox cluster and one (01) Proxmox backup server.
 
-### VMware Software Download
-
-VMware Workstation Pro is not designed for MacOS; it runs on Windows and Linux. You need to use VMware Fusion, which is available for macOS (both Intel and Apple silicon)
-
-**For Windows** - https://drive.bdren.net.bd/index.php/s/WgFmXDSC6T3YEPA
-
-**For MacOS** - https://drive.bdren.net.bd/index.php/s/om2T99cerZripNe
-
 ### System Requirements
 
 | Requirement             | Minimum                                                            | Recommended           |
 | ----------------------- | ------------------------------------------------------------------ | --------------------- |
-| **Operating System**    | Windows 8/10/11 (64-bit) or macOS (Intel/Apple Silicon)            | Latest updated OS     |
+| **Operating System**    | Windows 8/10/11 (64-bit); any recent Ubuntu/Linux distributions;
+                            or macOS (Intel/Apple Silicon)                                     | Latest updated OS     |
 | **Processor**           | 2-core 64-bit CPU with virtualization support (Intel VT-x / AMD-V) | Quad-core or higher   |
-| **RAM**                 | 8 GB                                                               | 16 GB or more          |
+| **RAM**                 | 8 GB                                                               | 16 GB or more         |
 | **Disk Space**          | 50 GB free                                                         | 100 GB+ SSD preferred |
 | **Internet Connection** | Required for download & updates                                    | Stable broadband      |
 
@@ -81,9 +74,23 @@ You can check support with running the following command in the terminal:
     
 If your Mac returns a result without error (e.g., hw.optional.arm64: 1), your system fully supports virtualization.
 
+### VMware Software Download
+
+VMware Workstation Pro runs on Windows and Linux only and is not designed for MacOS; You need to use VMware Fusion, which is available for macOS (both Intel and Apple silicon).
+
+Moreover, Proxmox VE officially supports only 64-bit x86 architecture (Intel 64 or AMD64) for the host operating system. VMware Fusion on Apple Silicon runs ARM VMs. An x86 ISO like Proxmox can't present a compatible EFI bootloader to an ARM UEFI, so you will get “No compatible bootloader found” in your Apple silicon MacOS (M1/M2/M3).
+
+**In summary, you need to have Windows, Linux, or Intel MacOS for completing our lab.**
+
+**For Windows** - https://drive.bdren.net.bd/index.php/s/WgFmXDSC6T3YEPA
+
+**For Linux** - https://drive.bdren.net.bd/index.php/s/yLGM8YpMRgEBQ5z
+
+**For MacOS** - https://drive.bdren.net.bd/index.php/s/om2T99cerZripNe
+
 ### Install VMware Workstation / Fusion
 
-Run the downloaded installer file (.exe file in windows; .dmg file in MacOS) and follow the installation wizard to finish installation.
+Run the downloaded installer file (.exe file in windows; .bundle file in Linux; .dmg file in MacOS) and follow the installation wizard to finish installation.
 
 ### Initial Setup of VMware Workstation / Fusion
 
@@ -93,7 +100,7 @@ In workstation, Go to **Edit** --> **Virtual Network Editor**
 
 In Fusion, Go to **Settings** --> **Network**
 
-It will open an editor wizard. Click on the "Change Settings" button to adjust any network configuration. We need to create/edit 2 types of network adapters. One (01) is **Host-only** type and another is **NAT** type.
+It will open an editor wizard. Click on the "Change Settings" button to adjust any network configuration. We need to create/edit 2 types of network adapters. One (01) is **Host-only** type and another is **NAT type**.
 
 1. Click on **Host-only** virtual adapter and edit the settings as shown in the following screenshot.
 
@@ -148,7 +155,7 @@ Create a new virtual disk (consolidated) with a minimum capacity of 20GB for ins
 
 <img width="637" height="528" alt="image" src="https://github.com/user-attachments/assets/6ebd83ef-04f6-4b9f-8688-77b4640e99fd" />
 
-Set the Name of this virtual machine to **PVE-1 **or Server-1/Node-1/Host -1. Select the CPU, RAM, and other components according to your available resources, ensuring they meet the minimum requirements. Particularly, go to **Network Adapter** and select the adapter that you previously created (NAT type).
+Set the Name of this virtual machine to **PVE-1 **or Server-1/Node-1/Host -1. Select the CPU, RAM, and other components according to your available resources, ensuring they meet the minimum requirements. Particularly, go to **Network Adapter** and select the custom adapter that you previously created (**NAT type**).
 
 <img width="637" height="421" alt="image" src="https://github.com/user-attachments/assets/f1bf8902-dcbb-4869-beb6-bbcd1d23567d" />
 
@@ -158,7 +165,9 @@ Go to CD/DVD section and select the downloaded ISO file.
 
 <img width="637" height="201" alt="image" src="https://github.com/user-attachments/assets/6461b1e2-71ff-4b4e-83ee-db734117adae" />
 
-Power ON the VM (PVE-1). After choosing the correct entry (for example, Boot from USB), the Proxmox VE menu will be displayed, and one of the following options can be selected. Choose **Install Proxmox VE (Graphical)**.
+Power ON the VM (PVE-1). After choosing the correct entry (for example, Boot from USB), the Proxmox VE menu will be displayed, and one of the following options can be selected. Choose **Install Proxmox VE (Graphical)**
+
+
 
 
 
