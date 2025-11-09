@@ -265,7 +265,7 @@ The Software Defined Network is an option for more complex virtual networks in P
 
 ####  Choosing network configurations
 
-There are basically 3 types of network we need. 
+There are basically 3 types of networks we need. 
 
   1.  Management and Cluster communication
   2.  VM/CT network
@@ -279,13 +279,43 @@ In VMware workstation panel, under **Settings** option of the VM (PVE-1), add 3 
 <img width="756" height="731" alt="image" src="https://github.com/user-attachments/assets/ba8f40a6-9d13-48ac-b9d6-234c4aac797f" />
 </div>
 
-After successful adding those network adapters, go to Proxmox dashboard and select Network menu. You will see 4 network interfaces listed there.
+After successfully adding those network adapters, go back to the Proxmox dashboard and select the Network menu. You will see 4 network interfaces listed there.
 
-1 interface (ens33) will be dedicated for Management and Cluster communication.
-2 interfaces (ens37 and ens38) will be binded and dedicated for VM/CT network.
-4th interface (ens39) will be dedicated for Ceph cluster communication.
+<img width="1363" height="329" alt="image" src="https://github.com/user-attachments/assets/987fed55-6fce-4a9c-85e8-13da43bf6c61" />
 
-Create a Linux Bond with 2 interfaces (ens37 and ens38) and deploy a Bridge with that Bond for connecting VM/CT. Configure the whole Networks as shown in the following screenshot.
+
+1 interface (ens33) will be dedicated to Management and Cluster communication.
+
+2 interfaces (ens37 and ens38) will be bound and dedicated for VM/CT network.
+
+The 4th interface (ens39) will be dedicated to Ceph cluster communication.
+
+The number of interfaces above depends on the available NIC card you have. In production, each type of network should have redundant interfaces.
+
+First, we need to set the management IP correctly. By default, the installation program creates a single bridge named **vmbr0**, which is connected to the first Ethernet card and the management IP is set on it. To separate networks, we need to set the management IP address directly on an interface (ens33). You can do it via either GUI or CLI.
+
+The corresponding configuration in /etc/network/interfaces looks like this
+
+```bash
+auto lo
+iface lo inet loopback
+
+iface ens33 inet manual
+
+auto vmbr0
+iface vmbr0 inet static
+        address 10.10.0.10/24
+        gateway 10.10.0.2
+        bridge-ports ens33
+        bridge-stp off
+        bridge-fd 0
+
+
+source /etc/network/interfaces.d/*
+```bash
+
+
+Create a Linux Bond with two interfaces (ens37 and ens38) and deploy a Bridge with that Bond for connecting VMs/CTs. Configure the whole network as shown in the following screenshot.
 
 
 ### Certificate Management
