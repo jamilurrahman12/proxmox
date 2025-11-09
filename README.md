@@ -17,8 +17,7 @@ The following section provides step-by-step instructions to install VMware Works
 
 | Requirement             | Minimum                                                            | Recommended           |
 | ----------------------- | ------------------------------------------------------------------ | --------------------- |
-| **Operating System**    | Windows 8/10/11 (64-bit); any recent Ubuntu/Linux distributions;
-                            or macOS (Intel/Apple Silicon)                                     | Latest updated OS     |
+| **Operating System**    | Windows 8/10/11 (64-bit); Linux or macOS (Intel/Apple Silicon)     | Latest updated OS     |
 | **Processor**           | 2-core 64-bit CPU with virtualization support (Intel VT-x / AMD-V) | Quad-core or higher   |
 | **RAM**                 | 8 GB                                                               | 16 GB or more         |
 | **Disk Space**          | 50 GB free                                                         | 100 GB+ SSD preferred |
