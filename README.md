@@ -183,7 +183,7 @@ Power ON the VM (PVE-1). After initial booting, the Proxmox VE menu will be disp
 <img width="1007" height="750" alt="image" src="https://github.com/user-attachments/assets/e16f77db-7f4e-40a6-9967-df44c8910b66" />
 </div>
 
-The first step is to read and accept their EULA (End User License Agreement). Following this, you can select the target hard disk(s) for the installation. By default, the whole disk(s) is used and all existing data is removed. The **Options** button lets you select the target file system, which defaults to ext4. Change it to xfs file system and the installer will use LVM.
+The first step is to read and accept their EULA (End User License Agreement). Following this, you can select the target hard disk(s) for the installation. By default, the whole disk(s) is used and all existing data is removed. The **Options** button lets you select the target file system, which defaults to ext4. Change it to XFS file system, and the installer will use LVM.
 
 <div align="center">
 <img width="1268" height="789" alt="image" src="https://github.com/user-attachments/assets/584f8c70-a143-4df9-9be1-f7a41ab56db0" />
@@ -489,7 +489,66 @@ Proxmox VE assigns a single vote to each node by default.
 
 ### Proxmox Cluster File System (pmxcfs)
 
+
+The Proxmox Cluster file system (“pmxcfs”) is a database-driven file system for storing configuration files, replicated in real time to all cluster nodes using corosync. We use this to store all Proxmox VE related configuration files.
+
+Although the file system stores all data inside a persistent database on disk, a copy of the data resides in RAM. This imposes restrictions on the maximum size, which is currently 128 MiB. This is still enough to store the configuration of several thousand virtual machines.
+
+
+Technology
+
+We use the Corosync Cluster Engine for cluster communication, and SQlite for the database file. The file system is implemented in user space using FUSE.
+
+ File System Layout
+
+The file system is mounted at:
+
+/etc/pve
+
+
+
 ## Proxmox VE Storage
+
+
+
+The Proxmox VE storage model is very flexible. Virtual machine images can either be stored on one or several local storages, or on shared storage like NFS or iSCSI (NAS, SAN). There are no limits, and you may configure as many storage pools as you like. You can use all storage technologies available for Debian Linux.
+
+One major benefit of storing VMs on shared storage is the ability to live-migrate running machines without any downtime, as all nodes in the cluster have direct access to VM disk images. There is no need to copy VM image data, so live migration is very fast in that case.
+
+The storage library (package libpve-storage-perl) uses a flexible plugin system to provide a common interface to all storage types. This can be easily adopted to include further storage types in the future.
+
+
+ Storage Types
+
+There are basically two different classes of storage types:
+
+File level storage
+
+    File level based storage technologies allow access to a fully featured (POSIX) file system. They are in general more flexible than any Block level storage (see below), and allow you to store content of any type. ZFS is probably the most advanced system, and it has full support for snapshots and clones.
+Block level storage
+
+    Allows to store large raw images. It is usually not possible to store other files (ISO, backups, ..) on such storage types. Most modern block level storage implementations support snapshots and clones. Ceph RADOS is a distributed systems, replicating storage data to different nodes that can be accessed as RBD (RADOS Block Device).
+
+
+#### Available storage types
+
+<img width="901" height="690" alt="image" src="https://github.com/user-attachments/assets/3002b182-2063-405e-b422-a405242ec65c" />
+
+
+
+All Proxmox VE related storage configuration is stored within a single text file at /etc/pve/storage.cfg. As this file is within /etc/pve/, it gets automatically distributed to all cluster nodes. So all nodes share the same storage configuration.
+
+Sharing storage configuration makes perfect sense for shared storage, because the same “shared” storage is accessible from all nodes.
+
+
+#### Thin Provisioning
+
+A number of storages, and the QEMU image format qcow2, support thin provisioning. With thin provisioning activated, only the blocks that the guest system actually use will be written to the storage.
+
+Say, for instance, you create a VM with a 32GB hard disk, and after installing the guest system OS, the root file system of the VM contains 3 GB of data. In that case only 3GB are written to the storage, even if the guest VM sees a 32GB hard drive. In this way thin provisioning allows you to create disk images which are larger than the currently available storage blocks. You can create large disk images for your VMs, and when the need arises, add more disks to your storage without resizing the VMs' file systems.
+
+All storage types which have the “Snapshots” feature also support thin provisioning.
+Caution 	If a storage runs full, all guests using volumes on that storage receive IO errors. This can cause file system inconsistencies and may corrupt your data. So it is advisable to avoid over-provisioning of your storage resources, or carefully observe free space to avoid such conditions.
 
 ### Deploy Hyper-Converged Ceph Cluster
 
