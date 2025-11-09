@@ -312,7 +312,7 @@ iface vmbr0 inet static
 
 
 source /etc/network/interfaces.d/*
-```bash
+```
 
 
 Create a Linux Bond with two interfaces (ens37 and ens38) and deploy a Bridge with that Bond for connecting VMs/CTs. Configure the whole network as shown in the following screenshot.
