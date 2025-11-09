@@ -1,11 +1,12 @@
 # Open Cloud Revolution: Hands-On Private Cloud with PROXMOX VE
-This guide prepares you to administer a full-fledge cloud infrastructure for an organization of any size.
+
+This guide prepares you to administer a full-fledged cloud infrastructure for an organization of any size.
 
 ## Lab Plan Architecture
 
-<img width="970" height="571" alt="image" src="https://github.com/user-attachments/assets/1119e349-bd6c-4d1a-9bf2-9ce906ac9b42" />
+<img width="967" height="566" alt="image" src="https://github.com/user-attachments/assets/788bebd2-1157-4f78-932b-45b0dbab6124" />
 
-In our lab, we will use VMware workstation/Fusion for provisioning the required servers.
+In our lab, we will use VMware Workstation/Fusion for provisioning the required servers.
 
 ## VMware Workstation Installation and Setup
 
