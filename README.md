@@ -146,25 +146,43 @@ or, https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso
 
 ### Provisioning Hardware (CPU, RAM, Disk, NIC) for Server-1/Node-1/Host -1
 
-Launch VMware Workstation/Fusion app and create a Virtual machine. While choosing the Operating system and its type, select Linux and Debian 13.x 64-bit, depending on the Proxmox version you are using. Proxmox 9 utilizes Debian 13 (Trixie) as its base operating system, whereas Proxmox 8 employed Debian 12 (Bookworm).
+Launch VMware Workstation/Fusion app and create a Virtual machine.
 
-<img width="635" height="528" alt="image" src="https://github.com/user-attachments/assets/dae2db98-8780-47d8-8c81-7eb26c712cbc" />
+A new installtion wizard will be opneded and select the downloaded ISO as installer disc image file.
 
-Create a new virtual disk (consolidated) with a minimum capacity of 20GB for installing the ISO on this disk.
+While choosing the Operating system and its version, select Linux and Debian 13.x 64-bit, depending on the Proxmox version you are using. Proxmox 9 utilizes Debian 13 (Trixie) as its base operating system, whereas Proxmox 8 employed Debian 12 (Bookworm). If Debian 13.x version is not available, select Debian 12.x at least.
 
-<img width="637" height="528" alt="image" src="https://github.com/user-attachments/assets/6ebd83ef-04f6-4b9f-8688-77b4640e99fd" />
+<div align="center">
+<img width="426" height="427" alt="image" src="https://github.com/user-attachments/assets/ac4dc04e-23d2-4388-aa1b-404d2b8156bd" />
+</div>
 
-Set the Name of this virtual machine to **PVE-1 **or Server-1/Node-1/Host -1. Select the CPU, RAM, and other components according to your available resources, ensuring they meet the minimum requirements. Particularly, go to **Network Adapter** and select the custom adapter that you previously created (**NAT type**).
+Set the Name of this virtual machine to **PVE-1 **or Server-1/Node-1/Host -1. Create a new virtual disk (consolidated) with a minimum capacity of 20GB for installing the ISO on this disk.
 
-<img width="637" height="421" alt="image" src="https://github.com/user-attachments/assets/f1bf8902-dcbb-4869-beb6-bbcd1d23567d" />
+<div align="center">
+<img width="427" height="430" alt="image" src="https://github.com/user-attachments/assets/95b7f4ca-4f03-499c-9d9a-9256ed2772d3" />
+</div>
 
-### Attach the ISO as CD/DVD and Install Proxmox on Server-1
+Select the CPU, RAM, and other components according to your available resources, ensuring they meet the minimum requirements. Particularly, go to **Network Adapter** and select the custom adapter that you previously created (**VMnet8 - NAT**).
 
-Go to CD/DVD section and select the downloaded ISO file.
+<div align="center">
+<img width="758" height="733" alt="image" src="https://github.com/user-attachments/assets/6579cd4a-0757-462e-8bc1-78050afdf531" />
+</div>
 
-<img width="637" height="201" alt="image" src="https://github.com/user-attachments/assets/6461b1e2-71ff-4b4e-83ee-db734117adae" />
+Go to **Processors** section and enable the option named **Virtualize Intel VT-x/EPT or AMD-V/RVI**. It will enable this VM (PVE-1) to create/host virtual machines on top of it.
 
-Power ON the VM (PVE-1). After choosing the correct entry (for example, Boot from USB), the Proxmox VE menu will be displayed, and one of the following options can be selected. Choose **Install Proxmox VE (Graphical)**
+<div align="center">
+<img width="759" height="734" alt="image" src="https://github.com/user-attachments/assets/e63ebe97-0cb9-4ad1-a495-df5f67099625" />
+</div>
+
+### Install Proxmox on Server-1
+
+Power ON the VM (PVE-1). After initial booting, the Proxmox VE menu will be displayed, and one of the following options can be selected. Choose **Install Proxmox VE (Graphical)** to start the installation.
+
+<div align="center">
+<img width="1007" height="750" alt="image" src="https://github.com/user-attachments/assets/e16f77db-7f4e-40a6-9967-df44c8910b66" />
+</div>
+
+The first step is to read their EULA (End User License Agreement). Following this, you can select the target hard disk(s) for the installation. By default, the whole disk(s) is used and all existing data is removed. The **Options** button lets you select the target file system, which defaults to ext4. Change it to xfs file system and the installer will use LVM.
 
 
 
