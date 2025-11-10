@@ -469,6 +469,9 @@ By using role-based user and permission management for all objects (VMs, Storage
 
 <img width="399" height="207" alt="image" src="https://github.com/user-attachments/assets/fe4c2eee-4377-48b9-a8a6-1db074392024" />
 
+This tab shows all available permissions created by Admin.
+
+<img width="892" height="317" alt="image" src="https://github.com/user-attachments/assets/9cc0a9c5-cf3e-47bf-9a1f-b1bfe05a3e29" />
 
 ### Authentication Realms
 
@@ -523,7 +526,7 @@ Then, you can assign any permissions/roles to your preferred Users/Group/API
 
 <img width="699" height="416" alt="image" src="https://github.com/user-attachments/assets/c19ce4ca-bd13-4cd7-81cd-3ac6a6fb625c" />
 
-
+However, you can also assign any roles to a specific resource pool from the **Permissions** tab under **Datacenter**.
 
 ### Groups
 
