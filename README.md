@@ -443,17 +443,20 @@ So, now ACME dashboard looks like -
 
 You can add new or manage existing domain entries under **Node -> Certificates**
 
-After configuring the desired domain(s) for a node and ensuring that the desired ACME account is selected, you can order your new certificate over the web interface. On success, the interface will reload after 10 seconds.
-
+Add a new domain (FQDN) with 
 
 <img width="448" height="179" alt="image" src="https://github.com/user-attachments/assets/7f19836b-dddf-4d02-9dc0-4646b720d388" />
+
+After configuring the desired domain(s) for a node and ensuring that the desired ACME account is selected, you can order your new certificate over the web interface. On success, the interface will reload after 10 seconds.
+
+<img width="1278" height="408" alt="image" src="https://github.com/user-attachments/assets/8cfd8dda-aaaf-4ed3-b1eb-386e11495447" />
 
 
 Renewal will happen automatically.
 
-In DNS server, you need to add an 'A' record for pve1.bdnog20.bdren.net.bd against the private IP so that you can browse the node by hostname. Now, you won't receive any warning from the browser and will see a verified logo displayed in front of the URL.
+In DNS server, you need to add an 'A' record for pve1.bdnog20.bdren.net.bd against the private IP so that you can browse the node by hostname. Now, you won't receive any warning from the browser, and a verified logo will be displayed in front of the URL.
 
-
+#### Certificate Locations in Proxmox
 
 <img width="1059" height="317" alt="image" src="https://github.com/user-attachments/assets/e92e3436-08fc-4368-ba08-49837d715c9d" />
 
