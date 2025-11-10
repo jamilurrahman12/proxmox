@@ -700,7 +700,6 @@ A quorum is the minimum number of votes that a distributed transaction has to ob
 ## Proxmox VE Storage
 
 
-
 The Proxmox VE storage model is very flexible. Virtual machine images can either be stored on one or several local storages, or on shared storage like NFS or iSCSI (NAS, SAN). There are no limits, and you may configure as many storage pools as you like. You can use all storage technologies available for Debian Linux.
 
 One major benefit of storing VMs on shared storage is the ability to live-migrate running machines without any downtime, as all nodes in the cluster have direct access to VM disk images. There is no need to copy VM image data, so live migration is very fast in that case.
@@ -759,7 +758,7 @@ Caution 	If a storage runs full, all guests using volumes on that storage receiv
 ## Migration
 
 ### VMware to Proxmox
-### AWS EC2 to Proxmox
+
 ### Proxmox to VMware
 
 
@@ -767,8 +766,6 @@ Caution 	If a storage runs full, all guests using volumes on that storage receiv
 
 The integrated firewall allows you to filter network packets on any VM or Container interface. Common sets of firewall rules can be grouped into “security groups”.
 
-•	Iptables/Firewall Overview
-•	Generated Iptables Rules
 •	Host-Specific Firewall Rules
 •	VM Specific Firewall Rules
 •	Security Group Implementation
@@ -782,7 +779,7 @@ The integrated firewall allows you to filter network packets on any VM or Contai
 
 ### Local Backup Procedure
 
-     Backup Jobs & Retention Policy
+#### Backup Jobs & Retention Policy
 
 ### VM Snapshot & VM Clone
 
@@ -791,14 +788,10 @@ The integrated firewall allows you to filter network packets on any VM or Contai
 
 ## Proxmox Backup Server (PBS): Open-Source Enterprise Backup Solution
 
-### Installtion and Configuration
+### Installation and Configuration
 
 ### Integration with Proxmox Cluster
 
 ### Backup Job creation and management
 
 ### Restoration
-
-```bash
-git clone https://github.com/you/repo.git
-cd repo && pip install -r requirements.txt
