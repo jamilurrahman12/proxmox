@@ -575,28 +575,61 @@ Power ON the PVE-2 and enter its console through VMware Workstation. Give userna
 
     nano /etc/hosts
 
+4. Make the machine’s IDs unique
+
+```bash
+rm -f /etc/machine-id /var/lib/dbus/machine-id
+systemd-machine-id-setup
+```
+(Empty/missing /etc/machine-id causes a new ID to be written on next boot.)
+
+5. Regenerate host SSH keys
+
+Cloned SSH keys cause scary “REMOTE HOST IDENTIFICATION HAS CHANGED” and break migrations.
+
+```bash
+rm -f /etc/ssh/ssh_host_*
+dpkg-reconfigure openssh-server
+```
+6. Regenerate Proxmox GUI/cluster certificates
+
+```bash
+pvecm updatecerts --force
+systemctl restart pveproxy pvedaemon
+```
+
+This recreates node certs to match the new hostname/IP.
+
 Reboot the node (PVE-2) for the changes to take effect.
 
-Now access the PVE-2 in the browser by accessing https://10.10.0.20:8006 and Re-issue the certificate
+Now, access the PVE-2 in the browser by visiting https://10.10.0.20:8006 and Reissue the certificate, if necessary.
 
 *** Repeat the same steps above for PVE-3 and, finally, power on PVE-1.
 
+So, our final IP and domain assignment to each of the 3 nodes - 
+
+```bash
+PVE-1 >> pve1.bdnog20.bdren.net.bd  >> 10.10.0.10
+PVE-2 >> pve2.bdnog20.bdren.net.bd  >> 10.10.0.20
+PVE-3 >> pve3.bdnog20.bdren.net.bd  >> 10.10.0.30
+```
+
 ## Cluster Manager: Proxmox VE Cluster setup
 
-The Proxmox VE cluster manager **pvecm** is a tool to create a group of physical servers. Such a group is called a cluster. We use the Corosync Cluster Engine for reliable group communication. There’s no explicit limit for the number of nodes in a cluster. 
+The Proxmox VE cluster manager, **pvecm**, is a tool used to create a group of physical servers. Such a group is referred to as a cluster. Corosync Cluster Engine is utilized for reliable group communication. There’s no explicit limit for the number of nodes in a cluster. 
 
-Because we use the Proxmox cluster file system (pmxcfs), you can connect to any node to manage the entire cluster. Each node can manage the entire cluster. There is no need for a dedicated manager node.
+Because of using the Proxmox cluster file system (pmxcfs), you can connect to any node to manage the entire cluster. Each node can manage the entire cluster. There is no need for a dedicated manager node.
 
 ### Preparing Nodes
 
 First, install Proxmox VE on all nodes. Ensure that each node is installed with the final hostname and IP address configuration. Changing the hostname and IP is not possible after cluster creation.
 
-•	Clustering Overview
-•	Create Cluster
+We have already provisioned 3 nodes in the above sections
 
+### Create Cluster
 
+You can create a cluster on any of those 3 nodes via the web interface (**Datacenter → Cluster**).
 
-You can either create a cluster on the console (login via ssh), or through the API using the Proxmox VE web interface (Datacenter → Cluster).
 Note: Use a unique name for your cluster. This name cannot be changed later. The cluster name follows the same rules as node names.
 
 Under Datacenter → Cluster, click on Create Cluster. Enter the cluster name and select a network connection from the drop-down list to serve as the main cluster network (Link 0). It defaults to the IP resolved via the node’s hostname.
