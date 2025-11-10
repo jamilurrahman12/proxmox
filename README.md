@@ -363,63 +363,53 @@ Bridges are like physical network switches implemented in software. All virtual 
 <img width="595" height="291" alt="image" src="https://github.com/user-attachments/assets/3c59429a-6d6f-429f-b412-c27c32c2b315" />
 
 
-Click on **Apply Configuration** button. The final network configuration looks like -
+Click on **Apply Configuration** button. Our final network configuration looks like -
 
 <img width="1214" height="220" alt="image" src="https://github.com/user-attachments/assets/fe3bd39c-9553-4450-9adc-874d06dd5faa" />
 
 
+*** we'll configure 4th interface (ens39) for Ceph network later. 
 
 Moreover, for example, in any production Proxmox cloud environment, the whole network configuration might look like - 
 
-#### Example-1
+#### Example-1: A **Linux VLAN** was created for the management network, and a VLAN-aware **Linux Bond** was created for the VM/CT network with different networks segregated by VLAN tag. 
 
 <img width="1203" height="532" alt="image" src="https://github.com/user-attachments/assets/3578e23e-25ee-4879-a4d5-a5b232d854e9" />
 
-#### Example-2
+#### Example-2: Here, all ports were included in the Linux Bond, and the Management network was created from that created Bond with a VLAN tag.
 
 <img width="1410" height="491" alt="image" src="https://github.com/user-attachments/assets/71e14240-351f-4740-b60a-7c5ac05dfd0a" />
 
 
 
-*** we'll configure 4th interface (ens39) for Ceph network later. 
-
-
 ### Certificate Management
 
-Each Proxmox VE cluster creates by default its own (self-signed) Certificate Authority (CA) and generates a certificate for each node which gets signed by the aforementioned CA.
-
-pveproxy daemon is responsible for certificates.
+Each PVE node creates, by default, its own (self-signed) Certificate Authority (CA) and generates a certificate that gets signed by the aforementioned CA. **pveproxy** daemon is responsible for certificates.
 
 #### Methods for certificates
 
-You have the following options for issuing certificate used by pveproxy:
+You have the following options for issuing a certificate used by pveproxy:
 
 * By default, a node-specific certificate is used. This certificate is signed by the cluster CA and, therefore, is not automatically trusted by browsers and operating systems. 
 
 * Upload Custom Certificate  (e.g., signed by a commercial CA). 
 
-* Use ACME to get a trusted certificate with automatic renewal. One of the ACME providers is Let’s Encrypt.
+* Use ACME to get a trusted certificate with automatic renewal. Proxmox VE includes the ACME protocol, allowing admins to use an ACME provider like Let’s Encrypt for easy setup of TLS certificates.
 
 #### Validation procedures
 
-ACME supports 2 types of validation
+ACME client supports 2 types of validation
 
-http-01 challenge: using a built-in web server
-dns-01 challenges: using a DNS plugin
-
+* http-01 challenge: using a built-in web server
+* dns-01 challenges: using a DNS plugin
 
 For http-01 challenges:
 
-You have to accept the ToS of Let’s Encrypt to register an account. 
-Port 80 of the node needs to be reachable from the internet. 
-There must be no other listener on port 80. 
-The requested (sub)domain needs to resolve to a public IP of the Node. 
+* You have to accept the ToS of Let’s Encrypt to register an account. 
+* Port 80 of the node needs to be reachable from the internet. 
+* There must be no other listener on port 80. 
+* The requested (sub)domain needs to resolve to the IP address of the Node. 
 
-
-
-Proxmox VE includes an implementation of the Automatic Certificate Management Environment ACME protocol, allowing Proxmox VE admins to use an ACME provider like Let’s Encrypt for easy setup of TLS certificates, which are accepted and trusted on modern operating systems and web browsers out of the box.
-
-ACME client supports validation of http-01 challenges using a built-in web server and validation of dns-01 challenges using a DNS plugin.
 
 <img width="1059" height="317" alt="image" src="https://github.com/user-attachments/assets/e92e3436-08fc-4368-ba08-49837d715c9d" />
 
