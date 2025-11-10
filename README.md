@@ -679,7 +679,7 @@ Now your cluster nodes should be visible under **Datacenter → Cluster**.
 
 *** Repeat the same steps above for PVE-3 to join the cluster. After successful joining, our ultimate cluster view looks like -
 
-
+<img width="1258" height="354" alt="image" src="https://github.com/user-attachments/assets/abb3571a-9eba-4838-8552-cd1c93285134" />
 
 
 In Shell/CLI, you can run the following to see the cluster status and nodes.
@@ -693,6 +693,7 @@ Proxmox VE employs a quorum-based technique to maintain a consistent state acros
 
 A quorum is the minimum number of votes that a distributed transaction has to obtain in order to be allowed to perform an operation in a distributed system. Proxmox VE assigns a single vote to each node by default.
 
+<img width="409" height="530" alt="image" src="https://github.com/user-attachments/assets/a70c7b62-00f0-4c5c-8bdb-f88e54e2dc48" />
 
 
 ## Proxmox VE Storage
