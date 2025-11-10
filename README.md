@@ -622,7 +622,9 @@ PVE-3 >> pve3.bdnog20.bdren.net.bd  >> 10.10.0.30
 
 ## Cluster Manager: Proxmox VE Cluster setup
 
-The Proxmox VE cluster manager, **pvecm**, is a tool used to create a group of physical servers. Such a group is referred to as a cluster. Corosync Cluster Engine is utilized for reliable group communication. There’s no explicit limit for the number of nodes in a cluster. 
+Proxmox VE cluster manager, **pvecm**, is a tool used to create a group of physical servers. Such a group is referred to as a cluster. **Corosync Cluster Engine** technology is utilized for reliable group communication. There’s no explicit limit for the number of nodes in a cluster.
+
+Proxmox Cluster file system **pmxcfs** is a database-driven file system for storing configuration files, replicated in real-time to all cluster nodes using Corosync.
 
 Because of using the Proxmox cluster file system (pmxcfs), you can connect to any node to manage the entire cluster. Each node can manage the entire cluster. There is no need for a dedicated manager node.
 
@@ -630,31 +632,57 @@ Because of using the Proxmox cluster file system (pmxcfs), you can connect to an
 
 First, install Proxmox VE on all nodes. Ensure that each node is installed with the final hostname and IP address configuration. Changing the hostname and IP is not possible after cluster creation.
 
-We have already provisioned 3 nodes in the above sections
+We have already provisioned 3 nodes in the above sections.
+
+We just need to go to **Systems --> Hosts** and each node's entry in this file should look like - 
+
+```bash
+10.10.0.10 pve1.bdnog20.bdren.net.bd pve1
+10.10.0.20 pve2.bdnog20.bdren.net.bd pve2
+10.10.0.30 pve3.bdnog20.bdren.net.bd pve3
+```
 
 ### Create Cluster
 
-You can create a cluster on any of those 3 nodes via the web interface (**Datacenter → Cluster**).
+You can create a cluster on any of those 3 nodes via the web interface (**Datacenter → Cluster**). Here, we're going to create cluster on PVE-1 node.
 
 Note: Use a unique name for your cluster. This name cannot be changed later. The cluster name follows the same rules as node names.
 
 Under Datacenter → Cluster, click on Create Cluster. Enter the cluster name and select a network connection from the drop-down list to serve as the main cluster network (Link 0). It defaults to the IP resolved via the node’s hostname.
 
+<img width="822" height="211" alt="image" src="https://github.com/user-attachments/assets/b35b22a8-0422-4829-bb8c-bff846339a67" />
 
-•	Adding Nodes to the Cluster
-
-All existing configuration in /etc/pve is overwritten when joining a cluster. In particular, a joining node cannot hold any guests, since guest IDs could otherwise conflict, and the node will inherit the cluster’s storage configuration. To join a node with existing guest, as a workaround, you can create a backup of each guest (using vzdump) and restore it under a different ID after joining. If the node’s storage layout differs, you will need to re-add the node’s storages, and adapt each storage’s node restriction to reflect on which nodes the storage is actually available.
-
-Log in to the web interface on an existing cluster node. Under Datacenter → Cluster, click the Join Information button at the top. Then, click on the button Copy Information. Alternatively, copy the string from the Information field manually.
-
-
-Next, log in to the web interface on the node you want to add. Under Datacenter → Cluster, click on Join Cluster. Fill in the Information field with the Join Information text you copied earlier. Most settings required for joining the cluster will be filled out automatically. For security reasons, the cluster password has to be entered manually.
+<img width="600" height="198" alt="image" src="https://github.com/user-attachments/assets/c0062149-acce-43ec-b281-cfbba774257f" />
 
 
 
-After clicking the Join button, the cluster join process will start immediately. After the node has joined the cluster, its current node certificate will be replaced by one signed from the cluster certificate authority (CA). This means that the current session will stop working after a few seconds. You then might need to force-reload the web interface and log in again with the cluster credentials.
+### Adding Nodes to the Cluster
 
-Now your node should be visible under Datacenter → Cluster.
+All existing configuration in /etc/pve is overwritten when joining a cluster. In particular, a joining node cannot hold any guests, since guest IDs could otherwise conflict. To join a node with existing guests, as a workaround, you can create a backup of each guest and restore it under a different ID after joining.
+
+Log in to the web interface on an existing cluster node (PVE-1). Under **Datacenter → Cluster**, click the **Join Information** button at the top. Then, click the **Copy Information** button.
+
+<img width="1225" height="272" alt="image" src="https://github.com/user-attachments/assets/3f012dd0-aee2-406a-b532-91a87739b3fc" />
+
+<img width="797" height="248" alt="image" src="https://github.com/user-attachments/assets/9519f539-fa27-4f10-9c8e-c7c311b490ee" />
+
+
+Next, log in to the web interface on PVE-2 node that you want to add. Under **Datacenter → Cluster**, click on **Join Cluster**. Fill in the Information field with the Join Information text you copied earlier. Most settings required for joining the cluster will be filled out automatically. For security reasons, the cluster password has to be entered manually.
+
+<img width="802" height="296" alt="image" src="https://github.com/user-attachments/assets/a4281ffa-eab4-44ba-bdd9-ea11a0fb83ae" />
+
+
+After clicking the Join button, the cluster join process will start immediately. After the node has joined the cluster, its current node certificate will be replaced by one signed by the cluster certificate authority (CA). This means that the current session will stop working after a few seconds. You may then need to force-reload the web interface and log in again.
+
+Now your cluster nodes should be visible under **Datacenter → Cluster**.
+
+<img width="1237" height="266" alt="image" src="https://github.com/user-attachments/assets/e359874b-4704-49b6-963b-06521b5b47e6" />
+
+
+*** Repeat the same steps above for PVE-3 to join the cluster. After successful joining, our ultimate cluster view looks like -
+
+
+
 
 In Shell/CLI, you can run the following to see the cluster status and nodes.
 
@@ -663,28 +691,9 @@ In Shell/CLI, you can run the following to see the cluster status and nodes.
 
 ### Quorum
 
-Proxmox VE use a quorum-based technique to provide a consistent state among all cluster nodes.
+Proxmox VE employs a quorum-based technique to maintain a consistent state across all cluster nodes.
 
-A quorum is the minimum number of votes that a distributed transaction has to obtain in order to be allowed to perform an operation in a distributed system.
-Proxmox VE assigns a single vote to each node by default.
-
-### Proxmox Cluster File System (pmxcfs)
-
-
-The Proxmox Cluster file system (“pmxcfs”) is a database-driven file system for storing configuration files, replicated in real time to all cluster nodes using corosync. We use this to store all Proxmox VE related configuration files.
-
-Although the file system stores all data inside a persistent database on disk, a copy of the data resides in RAM. This imposes restrictions on the maximum size, which is currently 128 MiB. This is still enough to store the configuration of several thousand virtual machines.
-
-
-Technology
-
-We use the Corosync Cluster Engine for cluster communication, and SQlite for the database file. The file system is implemented in user space using FUSE.
-
- File System Layout
-
-The file system is mounted at:
-
-/etc/pve
+A quorum is the minimum number of votes that a distributed transaction has to obtain in order to be allowed to perform an operation in a distributed system. Proxmox VE assigns a single vote to each node by default.
 
 
 
