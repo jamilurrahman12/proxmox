@@ -565,15 +565,21 @@ Power ON the PVE-2 and enter its console through VMware Workstation. Give userna
 
 1. Network file: Change the management IP to a free one. For instance, 10.10.0.20
 
-    nano /etc/network/interfaces
+```bash
+nano /etc/network/interfaces
+```
 
 2. Change hostname: 
 
-    nano /etc/hostname
+```bash
+nano /etc/hostname
+```
 
 3. hosts file: Adjust IP and the host's name
 
-    nano /etc/hosts
+```bash
+nano /etc/hosts
+```
 
 4. Make the machine’s IDs unique
 
