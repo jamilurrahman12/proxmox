@@ -541,6 +541,7 @@ There are two ways to use two-factor authentication -
 
 PVE Users can enable/disable the 2-factor option and set up TOTP from their dashboard after their first login.  
 
+<img width="512" height="576" alt="image" src="https://github.com/user-attachments/assets/e36e0761-f34d-44f1-821a-aa89627e6518" />
 
 
 
