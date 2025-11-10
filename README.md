@@ -225,7 +225,7 @@ Point your browser to the IP address given during the installation and port 8006
 
 Initially, you will get Browser Warning for using self-signed certificate. We'll generate Let's Encrypt commercial certificate later. For now, access the dashboard by clicking on **Advanced** option; then **Accept the Rist and Continue**.
 
-Log in using the root (realm PAM) username and the password chosen during installation.
+Log in using the root user (realm PAM) and the password chosen during installation.
 
 ### Host System Administration
 
@@ -258,7 +258,7 @@ Proxmox provides updates on a regular basis for all repositories. After adding t
 
 ### Network Configuration
 
-Proxmox VE is using the Linux network stack. This provides a lot of flexibility on how to set up the network on the Proxmox VE nodes. The configuration can be done either via the GUI, or by manually editing the file /etc/network/interfaces, which contains the whole network configuration. 
+Proxmox VE uses Linux network stack. This provides a lot of flexibility on how to set up the network on the Proxmox VE nodes. The configuration can be done either via the GUI, or by manually editing the file /etc/network/interfaces, which contains the whole network configuration. 
 
 A Linux bridge interface (commonly called vmbrX) is needed to connect guests to the underlying physical network. It can be thought of as a virtual switch which the guests and physical interfaces are connected to. This section provides how the network can be set up to accommodate different use cases like redundancy with a Bond and VLAN setup. 
 
@@ -368,7 +368,7 @@ Click on **Apply Configuration** button. Our final network configuration looks l
 <img width="1214" height="220" alt="image" src="https://github.com/user-attachments/assets/fe3bd39c-9553-4450-9adc-874d06dd5faa" />
 
 
-*** we'll configure 4th interface (ens39) for Ceph network later. 
+Note: We'll configure the 4th interface (ens39) for the Ceph network later. 
 
 Moreover, for example, in any production Proxmox cloud environment, the whole network configuration might look like - 
 
@@ -409,8 +409,8 @@ You can register and deactivate ACME accounts over the web interface, **Datacent
 
 ACME client supports 2 types of validation
 
-* http-01 challenge: using a built-in web server
-* dns-01 challenges: using a DNS plugin
+* **http-01 challenge:** using a built-in web server
+* **dns-01 challenges:** using a DNS plugin
 
 **For http-01 challenges:**
 
@@ -423,7 +423,7 @@ In the http-01 challenge where a web server provides a file with a certain conte
 
 **For dns-01 challenges:**
 
-Need to use a DNS challenge plugin. You can configure plugins over the web interface under **Datacenter -> ACME**. Then add a new challenge plugin. In my case, it is cPanel DNS. 
+Need to use a DNS challenge plugin. You can configure plugins over the web interface under **Datacenter -> ACME** by adding a new challenge plugin. In my case, it is cPanel DNS. 
 
 <img width="549" height="245" alt="image" src="https://github.com/user-attachments/assets/84fcc83c-fe97-4021-a656-6b1aaa99fca8" />
 
@@ -532,26 +532,48 @@ However, you can also assign any roles to a specific resource pool from the **Pe
 
 Each user can be a member of several groups. Groups are the preferred method for organizing access permissions. You should always grant permissions to groups instead of individual users. That way, you will get a much more maintainable access control list.
 
-•	Securing The root Account
-•	Permission Management & Privileges
-
 ### Multi-Factor Authentication for Users
 
-There are two ways to use two-factor authentication -
+There are two ways to use two-factor authentication in Proxmox -
 
 * TOTP (Time-based One-Time Password): we'll use it in the lab.
 * YubiKey OTP
 
-PVE Users can enable/disable the 2-factor option and set up TOTP from their dashboard after their first login.  
+PVE Users can enable/disable two-factor authentication and set up TOTP from their dashboard after first login.
 
 <img width="512" height="576" alt="image" src="https://github.com/user-attachments/assets/e36e0761-f34d-44f1-821a-aa89627e6518" />
 
+### Securing the root Account
+
+Here’s a practical, security-first checklist to lock down root on Proxmox VE. Pick what fits your setup; the items are ordered from “do this everywhere” to “nice to have”
+
+**1. Protect Web UI logins (root@pam)**
+
+* Turn on 2FA for root@pam user
+* Use a trusted TLS cert (no self-signed)
+* Limit who can reach the UI: enable the PVE Firewall at Datacenter and at the node, allow TCP 8006 only from your trusted IPs.
+* Stop using root for daily UI: create an admin user, give it the Administrator role at /, and log in with that instead of root.
+
+**2. Harden SSH (or avoid SSH as root entirely)**
+
+* Disable root SSH: In /etc/ssh/sshd_config, set 'PermitRootLogin no'
+
+**3. Use roles/tokens instead of sharing root**
+
+* RBAC everywhere: assign least-privilege roles to users/groups; don’t give full admin when not required.
+
+**4. Network placement and block bad logins**
+
+* Use Private IP for management/cluster
+* Don’t expose 8006/22 to the internet
+* Fail2ban for both SSH and the Proxmox API/UI (port 8006) to rate-limit brute force attempts
+* Keep Proxmox updated
 
 ## Provisioning Server-2 and Server-3
 
 So far, we have prepared our first server (PVE-1/Node-1). Now, we will provision the remaining two servers, whose names will be PVE-2 and PVE-3.
 
-First, we need to power off the PVE-1 VM and create the remaining two servers by cloning it. To do that, right-click on the PVE-1 node and then select Manage --> Clone. A wizard will be opened for further operations. It is worth clarifying that the reason behind the shutdown of PVE-1 is to ensure 'no conflict of IP'.
+First, we need to power off the PVE-1 VM and create the remaining two servers by cloning it. To do that, right-click on the PVE-1 node and then select **Manage --> Clone**. A wizard will be opened for further operations. It is worth clarifying that the reason behind the shutdown of PVE-1 is to ensure 'no conflict of IP'.
 
 Follow the cloning wizard and create a new virtual machine with full clone of PVE-1
 
@@ -561,7 +583,7 @@ Set the name of this VM to PVE-2.
 
 <img width="425" height="379" alt="image" src="https://github.com/user-attachments/assets/661c19b9-8c83-46fc-8b61-7684d1ec8faf" />
 
-Power ON the PVE-2 and enter its console through VMware Workstation. Give username (root) and password (same as used in PVE-1). Then, we need to edit the files below.
+Power on the PVE-2 and access its console/terminal/CLI directly through VMware Workstation. Give username (root) and password (same as used in PVE-1). Then, we need to edit the files below.
 
 1. **Network file:** Change the management IP to a free one. For instance, 10.10.0.20
 
@@ -608,7 +630,7 @@ Reboot the node (PVE-2) for the changes to take effect.
 
 Now, access the PVE-2 in the browser by visiting https://10.10.0.20:8006
 
-*** Repeat the same steps above for PVE-3 and, finally, power on PVE-1.
+*** Repeat the same steps above for PVE-3 and finally, power on PVE-1 ***
 
 So, our final IP and domain assignment to each of the 3 nodes - 
 
@@ -644,9 +666,9 @@ We just need to go to **Systems --> Hosts** and each node's entry in this file s
 
 You can create a cluster on any of those 3 nodes via the web interface (**Datacenter → Cluster**). Here, we're going to create cluster on PVE-1 node.
 
-Note: Use a unique name for your cluster. This name cannot be changed later. The cluster name follows the same rules as node names.
+Note: Use a unique name for your cluster. This name cannot be changed later.
 
-Under Datacenter → Cluster, click on Create Cluster. Enter the cluster name and select a network connection from the drop-down list to serve as the main cluster network (Link 0). It defaults to the IP resolved via the node’s hostname.
+Under **Datacenter → Cluster**, click on **Create Cluster**. Enter the cluster name and select a network connection from the drop-down list to serve as the main cluster network (Link 0). It defaults to the IP resolved via the node’s hostname.
 
 <img width="822" height="211" alt="image" src="https://github.com/user-attachments/assets/b35b22a8-0422-4829-bb8c-bff846339a67" />
 
@@ -656,7 +678,7 @@ Under Datacenter → Cluster, click on Create Cluster. Enter the cluster name an
 
 ### Adding Nodes to the Cluster
 
-All existing configuration in /etc/pve is overwritten when joining a cluster. In particular, a joining node cannot hold any guests, since guest IDs could otherwise conflict. To join a node with existing guests, as a workaround, you can create a backup of each guest and restore it under a different ID after joining.
+All existing configuration in **/etc/pve** is overwritten when joining a cluster. In particular, a joining node cannot hold any guests, since guest IDs could otherwise conflict. To join a node with existing guests, as a workaround, you can create a backup of each guest and restore it under a different ID after joining.
 
 Log in to the web interface on an existing cluster node (PVE-1). Under **Datacenter → Cluster**, click the **Join Information** button at the top. Then, click the **Copy Information** button.
 
@@ -699,23 +721,22 @@ A quorum is the minimum number of votes that a distributed transaction has to ob
 ## Proxmox VE Storage
 
 
-The Proxmox VE storage model is very flexible. Virtual machine images can either be stored on one or several local storages, or on shared storage like NFS or iSCSI (NAS, SAN). There are no limits, and you may configure as many storage pools as you like. You can use all storage technologies available for Debian Linux.
+The Proxmox VE storage model is very flexible. Virtual machine images can be stored on one or several local storage devices, or on shared storage such as NFS or iSCSI (NAS, SAN). There are no limits, and you may configure as many storage pools as you like. You can use all storage technologies available for Debian Linux.
 
 One major benefit of storing VMs on shared storage is the ability to live-migrate running machines without any downtime, as all nodes in the cluster have direct access to VM disk images. There is no need to copy VM image data, so live migration is very fast in that case.
 
-The storage library (package libpve-storage-perl) uses a flexible plugin system to provide a common interface to all storage types. This can be easily adopted to include further storage types in the future.
 
+### Storage Types
 
- Storage Types
+There are basically two different classes of storage types - 
 
-There are basically two different classes of storage types:
+* **File-level storage**
 
-File level storage
+File-based storage technologies allow access to a fully featured (POSIX) file system. They are, in general, more flexible than any block-level storage and allow you to store content of any type. CephFS, Directory, and NFS are examples here.
 
-    File level based storage technologies allow access to a fully featured (POSIX) file system. They are in general more flexible than any Block level storage (see below), and allow you to store content of any type. ZFS is probably the most advanced system, and it has full support for snapshots and clones.
-Block level storage
+* **Block-level storage**
 
-    Allows to store large raw images. It is usually not possible to store other files (ISO, backups, ..) on such storage types. Most modern block level storage implementations support snapshots and clones. Ceph RADOS is a distributed systems, replicating storage data to different nodes that can be accessed as RBD (RADOS Block Device).
+Allows for storing large raw images. It is usually not possible to store other files (e.g., ISO, backups) on block-level storage. Ceph RBD, LVM, and iSCSI are block-level storage.
 
 
 #### Available storage types
@@ -724,19 +745,20 @@ Block level storage
 
 
 
-All Proxmox VE related storage configuration is stored within a single text file at /etc/pve/storage.cfg. As this file is within /etc/pve/, it gets automatically distributed to all cluster nodes. So all nodes share the same storage configuration.
+All Proxmox VE-related storage configurations are stored within a single text file at /etc/pve/storage.cfg. As this file is located in /etc/pve/, it is automatically distributed to all cluster nodes. So all nodes share the same storage configuration.
 
 Sharing storage configuration makes perfect sense for shared storage, because the same “shared” storage is accessible from all nodes.
 
 
 #### Thin Provisioning
 
-A number of storages, and the QEMU image format qcow2, support thin provisioning. With thin provisioning activated, only the blocks that the guest system actually use will be written to the storage.
+With thin provisioning activated, only blocks that the guest system actually uses will be written to the storage.
 
-Say, for instance, you create a VM with a 32GB hard disk, and after installing the guest system OS, the root file system of the VM contains 3 GB of data. In that case only 3GB are written to the storage, even if the guest VM sees a 32GB hard drive. In this way thin provisioning allows you to create disk images which are larger than the currently available storage blocks. You can create large disk images for your VMs, and when the need arises, add more disks to your storage without resizing the VMs' file systems.
+For instance, say you create a VM with a 32GB hard disk, and after installing the guest system's OS, the root file system of the VM contains 3 GB of data. In that case, only 3GB are written to the storage, even if the guest VM sees a 32GB hard drive. In this way, thin provisioning allows you to create disk images that are larger than the currently available storage blocks, while also enabling over-provisioning.
 
-All storage types which have the “Snapshots” feature also support thin provisioning.
-Caution 	If a storage runs full, all guests using volumes on that storage receive IO errors. This can cause file system inconsistencies and may corrupt your data. So it is advisable to avoid over-provisioning of your storage resources, or carefully observe free space to avoid such conditions.
+All storage types in Proxmox that have the “Snapshots” feature also support thin provisioning.
+
+Caution: If a storage runs out of space, all guests using volumes on that storage will receive I/O errors. This can cause file system inconsistencies and may corrupt your data. Therefore, it is advisable to avoid over-provisioning of your storage resources or carefully monitor free space to prevent such conditions.
 
 ### Deploy Hyper-Converged Ceph Cluster
 
@@ -745,8 +767,6 @@ Caution 	If a storage runs full, all guests using volumes on that storage receiv
 ## Proxmox Container Toolkit
 
 ## High Availability (HA) - PVE HA Manager
-
-## Software-Defined Network
 
 ## Testing
 
@@ -765,11 +785,11 @@ Caution 	If a storage runs full, all guests using volumes on that storage receiv
 
 The integrated firewall allows you to filter network packets on any VM or Container interface. Common sets of firewall rules can be grouped into “security groups”.
 
-•	Host-Specific Firewall Rules
-•	VM Specific Firewall Rules
-•	Security Group Implementation
-•	Proxmox VE Hosts Security
-•	Filter Remote IPs
+* Host-Specific Firewall Rules
+* VM Specific Firewall Rules
+* Security Group Implementation
+* Proxmox VE Hosts Security
+* Filter Remote IPs
 
 
 ## Disaster Recovery: DC-DR Concept
