@@ -443,7 +443,7 @@ So, now ACME dashboard looks like -
 
 You can add new or manage existing domain entries under **Node -> Certificates**
 
-Add a new domain (FQDN) with 
+Add a new domain (FQDN) with a preferred challenge and plugin.
 
 <img width="448" height="179" alt="image" src="https://github.com/user-attachments/assets/7f19836b-dddf-4d02-9dc0-4646b720d388" />
 
@@ -463,20 +463,85 @@ In DNS server, you need to add an 'A' record for pve1.bdnog20.bdren.net.bd again
 
 ## Identity and Access Management (IAM) - User Management
 
-Proxmox VE supports multiple authentication sources
+The IAM configuration options can be found under **Datacenter → Permissions**
 
-Linux PAM standard authentication
-Integrated Proxmox VE authentication server
-LDAP server
-Microsoft Active Directory
-OpenID Connect Server
+By using role-based user and permission management for all objects (VMs, Storage, nodes, etc.), granular access can be defined.
+
+<img width="399" height="207" alt="image" src="https://github.com/user-attachments/assets/fe4c2eee-4377-48b9-a8a6-1db074392024" />
 
 
-•	Basics Authentication & Authorization
+### Authentication Realms
+
+Proxmox VE supports multiple authentication realms - 
+
+* Linux PAM standard authentication: A framework for system-wide user authentication
+* Integrated Proxmox VE authentication server: Unix-like password store, which stores hashed passwords in /etc/pve/priv/shadow.cfg
+* LDAP server: OpenLDAP is a popular open-source implementation of the LDAP protocol
+* Microsoft Active Directory (AD)
+* OpenID Connect Server: Implemented as an identity layer on top of the OAuth 2.0 protocol
+
+Go to **Datacenter → Permissions → Realms** and you can add any of your preferred authentication realms. By default, **pam** and **pve** are enabled.
+
+
+### System administrator
+
+The system’s root user can always log in via the Linux PAM realm and is an unconfined administrator. This user cannot be deleted, but attributes can still be changed. System mails will be sent to the email address assigned to this user.
+
+### Roles and Privileges
+
+* A role is simply a list of privileges. Proxmox VE comes with several predefined roles that satisfy most requirements.
+* A privilege is the right to perform a specific action.
+* To simplify management, lists of privileges are grouped into roles, which can then be used in the permission table.
+
+Note that privileges cannot be directly assigned to users or paths unless they are part of a role.
+
+You can see the whole set of predefined roles in the GUI (**Datacenter → Permissions → Roles**).
+
+You can also create any new roles from there. You can set a role name and select any desired privileges from the Privileges drop-down menu.
+
+<img width="397" height="147" alt="image" src="https://github.com/user-attachments/assets/09989a6a-fe34-413c-ba14-654ae72ed6d3" />
+
+
+
+### Resource Pools
+
+A resource pool is a set of virtual machines and storage devices. It is useful for permission handling in cases where certain users should have controlled access to a specific set of resources. Resource pools are often used in tandem with groups, so that the members of a group have permissions on a set of machines and storage.
+
+<img width="293" height="148" alt="image" src="https://github.com/user-attachments/assets/a8faec55-2401-46d3-8158-c1968229f635" />
+
+When you create a new pool, its name will be displayed under the main tree.
+
+<img width="636" height="171" alt="image" src="https://github.com/user-attachments/assets/2ce7467c-578e-4e02-8c30-0ddaa8502dd9" />
+
+You can add **Members** to the pool in the form of virtual machines and storage.
+
+<img width="518" height="171" alt="image" src="https://github.com/user-attachments/assets/e049404d-ace2-43ab-8309-5b881b0ef02d" />
+
+Then, you can assign any permissions/roles to your preferred Users/Group/API
+
+<img width="550" height="196" alt="image" src="https://github.com/user-attachments/assets/a13c9a66-bb42-44e2-bf75-c7006a9aba36" />
+
+<img width="699" height="416" alt="image" src="https://github.com/user-attachments/assets/c19ce4ca-bd13-4cd7-81cd-3ac6a6fb625c" />
+
+
+
+### Groups
+
+Each user can be a member of several groups. Groups are the preferred method for organizing access permissions. You should always grant permissions to groups instead of individual users. That way, you will get a much more maintainable access control list.
+
 •	Securing The root Account
 •	Permission Management & Privileges
-•	Multi-Factor Authentication for Users
-•	Groups and Roles
+
+### Multi-Factor Authentication for Users
+
+There are two ways to use two-factor authentication -
+
+* TOTP (Time-based One-Time Password): we'll use it in the lab.
+* YubiKey OTP
+
+PVE Users can enable/disable the 2-factor option and set up TOTP from their dashboard after their first login.  
+
+
 
 
 ## QEMU/KVM Virtual Machines
