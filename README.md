@@ -563,25 +563,25 @@ Set the name of this VM to PVE-2.
 
 Power ON the PVE-2 and enter its console through VMware Workstation. Give username (root) and password (same as used in PVE-1). Then, we need to edit the files below.
 
-1. Network file: Change the management IP to a free one. For instance, 10.10.0.20
+1. **Network file:** Change the management IP to a free one. For instance, 10.10.0.20
 
 ```bash
 nano /etc/network/interfaces
 ```
 
-2. Change hostname: 
+2. **Change hostname:**
 
 ```bash
 nano /etc/hostname
 ```
 
-3. hosts file: Adjust IP and the host's name
+3. **Hosts file:** Adjust IP and the host's name
 
 ```bash
 nano /etc/hosts
 ```
 
-4. Make the machine’s IDs unique
+4. **Make the machine’s IDs unique**
 
 ```bash
 rm -f /etc/machine-id /var/lib/dbus/machine-id
@@ -589,7 +589,7 @@ systemd-machine-id-setup
 ```
 (Empty/missing /etc/machine-id causes a new ID to be written on next boot.)
 
-5. Regenerate host SSH keys
+5. **Regenerate host SSH keys**
 
 Cloned SSH keys cause scary “REMOTE HOST IDENTIFICATION HAS CHANGED” and break migrations.
 
@@ -597,18 +597,16 @@ Cloned SSH keys cause scary “REMOTE HOST IDENTIFICATION HAS CHANGED” and bre
 rm -f /etc/ssh/ssh_host_*
 dpkg-reconfigure openssh-server
 ```
-6. Regenerate Proxmox GUI/cluster certificates
+6. **Regenerate Proxmox GUI/cluster certificates:** It recreates node certs to match the new hostname/IP.
 
 ```bash
 pvecm updatecerts --force
 systemctl restart pveproxy pvedaemon
 ```
 
-This recreates node certs to match the new hostname/IP.
-
 Reboot the node (PVE-2) for the changes to take effect.
 
-Now, access the PVE-2 in the browser by visiting https://10.10.0.20:8006 and Reissue the certificate, if necessary.
+Now, access the PVE-2 in the browser by visiting https://10.10.0.20:8006
 
 *** Repeat the same steps above for PVE-3 and, finally, power on PVE-1.
 
