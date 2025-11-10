@@ -454,7 +454,7 @@ After configuring the desired domain(s) for a node and ensuring that the desired
 
 Renewal will happen automatically.
 
-In DNS server, you need to add an 'A' record for pve1.bdnog20.bdren.net.bd against the private IP so that you can browse the node by hostname. Now, you won't receive any warning from the browser, and a verified logo will be displayed in front of the URL.
+In DNS server, you need to add an 'A' record for **pve1.bdnog20.bdren.net.bd** against the private IP so that you can browse the node by hostname. Now, you won't receive any security warnings from the browser, and a verified logo will be displayed next to the URL.
 
 #### Certificate Locations in Proxmox
 
@@ -547,12 +547,39 @@ PVE Users can enable/disable the 2-factor option and set up TOTP from their dash
 <img width="512" height="576" alt="image" src="https://github.com/user-attachments/assets/e36e0761-f34d-44f1-821a-aa89627e6518" />
 
 
-
-## QEMU/KVM Virtual Machines
-
-## Proxmox Container Toolkit
-
 ## Provisioning Server-2 and Server-3
+
+So far, we have prepared our first server (PVE-1/Node-1). Now, we will provision the remaining two servers, whose names will be PVE-2 and PVE-3.
+
+First, we need to power off the PVE-1 VM and create the remaining two servers by cloning it. To do that, right-click on the PVE-1 node and then select Manage --> Clone. A wizard will be opened for further operations. It is worth clarifying that the reason behind the shutdown of PVE-1 is to ensure 'no conflict of IP'.
+
+Follow the cloning wizard and create a new virtual machine with full clone of PVE-1
+
+<img width="428" height="379" alt="image" src="https://github.com/user-attachments/assets/4cc72bdf-7cb2-49b0-abb5-74fa3975c306" />
+
+Set the name of this VM to PVE-2.
+
+<img width="425" height="379" alt="image" src="https://github.com/user-attachments/assets/661c19b9-8c83-46fc-8b61-7684d1ec8faf" />
+
+Power ON the PVE-2 and enter its console through VMware Workstation. Give username (root) and password (same as used in PVE-1). Then, we need to edit the files below.
+
+1. Network file: Change the management IP to a free one. For instance, 10.10.0.20
+
+    nano /etc/network/interfaces
+
+2. Change hostname: 
+
+    nano /etc/hostname
+
+3. hosts file: Adjust IP and the host's name
+
+    nano /etc/hosts
+
+Reboot the node (PVE-2) for the changes to take effect.
+
+Now access the PVE-2 in the browser by accessing https://10.10.0.20:8006 and Re-issue the certificate
+
+*** Repeat the same steps above for PVE-3 and, finally, power on PVE-1.
 
 ## Cluster Manager: Proxmox VE Cluster setup
 
@@ -666,6 +693,10 @@ All storage types which have the “Snapshots” feature also support thin provi
 Caution 	If a storage runs full, all guests using volumes on that storage receive IO errors. This can cause file system inconsistencies and may corrupt your data. So it is advisable to avoid over-provisioning of your storage resources, or carefully observe free space to avoid such conditions.
 
 ### Deploy Hyper-Converged Ceph Cluster
+
+## QEMU/KVM Virtual Machines
+
+## Proxmox Container Toolkit
 
 ## High Availability (HA) - PVE HA Manager
 
