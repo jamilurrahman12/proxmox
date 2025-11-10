@@ -369,7 +369,16 @@ Click on **Apply Configuration** button. The final network configuration looks l
 
 
 
-Moreover, in any production Proxmox cloud environment, the whole network configuration might look like - 
+Moreover, for example, in any production Proxmox cloud environment, the whole network configuration might look like - 
+
+#### Example-1
+
+<img width="1203" height="532" alt="image" src="https://github.com/user-attachments/assets/3578e23e-25ee-4879-a4d5-a5b232d854e9" />
+
+#### Example-2
+
+<img width="1410" height="491" alt="image" src="https://github.com/user-attachments/assets/71e14240-351f-4740-b60a-7c5ac05dfd0a" />
+
 
 
 *** we'll configure 4th interface (ens39) for Ceph network later. 
