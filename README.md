@@ -396,6 +396,15 @@ You have the following options for issuing a certificate used by pveproxy:
 
 * Use ACME to get a trusted certificate with automatic renewal. Proxmox VE includes the ACME protocol, allowing admins to use an ACME provider like Let’s Encrypt for easy setup of TLS certificates.
 
+#### ACME Account
+
+You need to register an ACME account per cluster with the endpoint you want to use. The email address used for that account will serve as contact point for renewal-due or similar notifications from the ACME endpoint.
+
+You can register and deactivate ACME accounts over the web interface, **Datacenter -> ACME**
+
+<img width="451" height="238" alt="image" src="https://github.com/user-attachments/assets/bb7d90d0-fa58-4024-9a5a-491645380a65" />
+
+
 #### Validation procedures
 
 ACME client supports 2 types of validation
@@ -403,12 +412,37 @@ ACME client supports 2 types of validation
 * http-01 challenge: using a built-in web server
 * dns-01 challenges: using a DNS plugin
 
-For http-01 challenges:
+**For http-01 challenges:**
 
 * You have to accept the ToS of Let’s Encrypt to register an account. 
 * Port 80 of the node needs to be reachable from the internet. 
 * There must be no other listener on port 80. 
-* The requested (sub)domain needs to resolve to the IP address of the Node. 
+* The requested (sub)domain needs to resolve to a public IP of the Node.
+
+In the http-01 challenge where a web server provides a file with a certain content to prove that it controls a domain. Sometimes this isn’t possible, either because of technical limitations or if the address of a record is not reachable from the public internet. The dns-01 challenge can be used in these cases. This challenge is fulfilled by creating a certain DNS record in the domain’s zone.
+
+**For dns-01 challenges:**
+
+Need to use a DNS challenge plugin. You can configure plugins over the web interface under **Datacenter -> ACME**. Then add a new challenge plugin. In my case, it is cPanel DNS. 
+
+<img width="551" height="248" alt="image" src="https://github.com/user-attachments/assets/0cfb0d60-d59e-43d5-96da-bfe9cdfd2c56" />
+
+So, now ACME dashboard looks like - 
+
+<img width="814" height="440" alt="image" src="https://github.com/user-attachments/assets/dd6d254d-cf50-437b-bd40-453a528065b0" />
+
+#### Issuing Let's Encrypt Certificate
+
+You can add new or manage existing domain entries under **Node -> Certificates**
+
+After configuring the desired hostname for a node and ensuring that the desired ACME account is selected, you can order your new certificate over the web interface. On success, the interface will reload after 10 seconds.
+
+
+<img width="448" height="179" alt="image" src="https://github.com/user-attachments/assets/7f19836b-dddf-4d02-9dc0-4646b720d388" />
+
+
+Renewal will happen automatically.
+
 
 
 <img width="1059" height="317" alt="image" src="https://github.com/user-attachments/assets/e92e3436-08fc-4368-ba08-49837d715c9d" />
