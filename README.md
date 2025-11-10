@@ -425,7 +425,15 @@ In the http-01 challenge where a web server provides a file with a certain conte
 
 Need to use a DNS challenge plugin. You can configure plugins over the web interface under **Datacenter -> ACME**. Then add a new challenge plugin. In my case, it is cPanel DNS. 
 
-<img width="551" height="248" alt="image" src="https://github.com/user-attachments/assets/0cfb0d60-d59e-43d5-96da-bfe9cdfd2c56" />
+<img width="549" height="245" alt="image" src="https://github.com/user-attachments/assets/84fcc83c-fe97-4021-a656-6b1aaa99fca8" />
+
+For cPanel hosted DNS, you can use the following code as API Data.
+
+```bash
+cPanel_Username=your_cpanel_username
+cPanel_Apitoken=your_cpanel_api_token
+cPanel_Hostname=https://your_cpanel_hostname:2083
+```
 
 So, now ACME dashboard looks like - 
 
@@ -435,13 +443,15 @@ So, now ACME dashboard looks like -
 
 You can add new or manage existing domain entries under **Node -> Certificates**
 
-After configuring the desired hostname for a node and ensuring that the desired ACME account is selected, you can order your new certificate over the web interface. On success, the interface will reload after 10 seconds.
+After configuring the desired domain(s) for a node and ensuring that the desired ACME account is selected, you can order your new certificate over the web interface. On success, the interface will reload after 10 seconds.
 
 
 <img width="448" height="179" alt="image" src="https://github.com/user-attachments/assets/7f19836b-dddf-4d02-9dc0-4646b720d388" />
 
 
 Renewal will happen automatically.
+
+In DNS server, you need to add an 'A' record for pve1.bdnog20.bdren.net.bd against the private IP so that you can browse the node by hostname. Now, you won't receive any warning from the browser and will see a verified logo displayed in front of the URL.
 
 
 
