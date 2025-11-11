@@ -871,24 +871,27 @@ Ceph Object Storage Daemons store objects for Ceph over the network. It is recom
 
 Create an OSD on each node for each disk.
 
+<img width="1140" height="278" alt="image" src="https://github.com/user-attachments/assets/ac877f3e-de6b-4b7e-9dc9-648f5f89c071" />
+
+
 #### Ceph Pools
 
 A pool is a logical group for storing objects. It holds a collection of objects, known as Placement Groups (PG, pg_num).
 
+<img width="599" height="282" alt="image" src="https://github.com/user-attachments/assets/b8ceb520-9b20-4e24-bf4b-15f18e9abe0c" />
 
- CephFS
+
+#### CephFS
 
 Ceph also provides a filesystem, which runs on top of the same object storage as RADOS block devices do. A Metadata Server (MDS) is used to map the RADOS backed objects to files and directories, allowing Ceph to provide a POSIX-compliant, replicated filesystem. This allows you to easily configure a clustered, highly available, shared filesystem. Ceph’s Metadata Servers guarantee that files are evenly distributed over the entire Ceph cluster. 
 
- Metadata Server (MDS)
+#### Metadata Server (MDS)
 
-CephFS needs at least one Metadata Server to be configured and running, in order to function. You can create an MDS through the Proxmox VE web GUI’s Node -> CephFS panel 
+CephFS needs at least one Metadata Server to be configured and running in order to function. You can create an MDS through the Proxmox VE web GUI’s Node -> CephFS panel 
 
- Create CephFS
+#### Create CephFS
 
-With Proxmox VE’s integration of CephFS, you can easily create a CephFS using the web interface, CLI or an external API interface.
-
-After this is complete, you can simply create a CephFS through either the Web GUI’s Node -> CephFS panel 
+When you have MDS, create CephFS.
 
 
 ## QEMU/KVM Virtual Machines
