@@ -754,13 +754,113 @@ Sharing storage configuration makes perfect sense for shared storage, because th
 
 With thin provisioning activated, only blocks that the guest system actually uses will be written to the storage.
 
-For instance, say you create a VM with a 32GB hard disk, and after installing the guest system's OS, the root file system of the VM contains 3 GB of data. In that case, only 3GB are written to the storage, even if the guest VM sees a 32GB hard drive. In this way, thin provisioning allows you to create disk images that are larger than the currently available storage blocks, while also enabling over-provisioning.
+For instance, say you create a VM with a 32GB hard disk, and after installing the guest system's OS, the root file system of the VM contains 3 GB of data. In that case, only 3GB are written to the storage, even if the guest VM sees a 32GB hard drive. In this way, thin provisioning enables you to create disk images that are larger than the currently available storage blocks, which allows over-provisioning.
 
 All storage types in Proxmox that have the “Snapshots” feature also support thin provisioning.
 
 Caution: If a storage runs out of space, all guests using volumes on that storage will receive I/O errors. This can cause file system inconsistencies and may corrupt your data. Therefore, it is advisable to avoid over-provisioning of your storage resources or carefully monitor free space to prevent such conditions.
 
 ### Deploy Hyper-Converged Ceph Cluster
+
+#### What is Hyperconverged Infrastructure (HCI)
+
+It is an IT framework that combines compute, storage, and networking into a single, software-defined system. HCI relies on **Compute Virtualization**, **SDS**, **SDN**.
+
+<img width="1130" height="531" alt="image" src="https://github.com/user-attachments/assets/dc1a8d73-34e5-42aa-a178-5df3dc01a583" />
+
+
+##### Key Features of HCI
+
+* **Software-Defined Architecture**
+
+* **Unified Hardware:** All physical resources (servers, storage devices, and network components) are bundled together
+
+* **Simplified Management**
+
+* **Cost Efficiency:** By converging these critical functions into a single software layer, HCI eliminates the complexities of traditional data centers, meaning reduced cost.
+
+#### SDS deployment in Proxmox using Ceph
+
+Ceph is an open-source, distributed storage system that enables SDS (Software-Defined Storage).
+
+Proxmox VE natively supports integration of Ceph. Ceph supports both file and object storage.
+
+**Some advantages of Ceph on Proxmox VE are:**
+
+* Easy setup and management via CLI and GUI
+* Thin provisioning
+* Snapshot support
+* Self healing (**Data Replication**, **Automated Data Recovery** and **CRUSH Algorithm**)
+* Scalable to the exabyte level (1,000 PB)
+* Provides block, file system, and object storage
+* Data is replicated, making it fault tolerant
+* Runs on commodity hardware
+* No need for hardware RAID controllers
+* Open source
+
+#### Terminology
+
+Ceph consists of multiple Daemons for use as an RBD storage:
+
+* Ceph Monitor (ceph-mon, or MON)
+* Ceph Manager (ceph-mgr, or MGS)
+* Ceph Metadata Service (ceph-mds, or MDS)
+* Ceph Object Storage Daemon (ceph-osd, or OSD)
+
+### Initial Ceph Installation & Configuration
+
+The configuration step includes the following settings:
+
+    Public Network: This network will be used for public storage communication (e.g., for virtual machines using a Ceph RBD backed disk, or a CephFS mount), and communication between the different Ceph services. This setting is required.
+    Separating your Ceph traffic from the Proxmox VE cluster communication (corosync), and possible the front-facing (public) networks of your virtual guests, is highly recommended. Otherwise, Ceph’s high-bandwidth IO-traffic could cause interference with other low-latency dependent services.
+
+    Cluster Network: Specify to separate the OSD replication and heartbeat traffic as well. This setting is optional.
+    Using a physically separated network is recommended, as it will relieve the Ceph public and the virtual guests network, while also providing a significant Ceph performance improvements. 
+
+
+You have two more options which are considered advanced and therefore should only changed if you know what you are doing.
+
+    Number of replicas: Defines how often an object is replicated.
+
+    Minimum replicas: Defines the minimum number of required replicas for I/O to be marked as complete.
+Additionally, you need to choose your first monitor node. This step is required.
+
+You should now see a success page as the last step, with further instructions on how to proceed. Your system is now ready to start using Ceph. To get started, you will need to create some additional monitors, OSDs and at least one pool.
+
+
+ Ceph Monitor
+screenshot/gui-ceph-monitor.png
+
+The Ceph Monitor (MON) [5] maintains a master copy of the cluster map. For high availability, you need at least 3 monitors.
+
+ Ceph Manager
+
+The Manager daemon runs alongside the monitors. It provides an interface to monitor the cluster. Since the release of Ceph luminous, at least one ceph-mgr [6] daemon is required.
+
+ Ceph OSDs
+ 
+
+Ceph Object Storage Daemons store objects for Ceph over the network. It is recommended to use one OSD per physical disk.
+
+ Ceph Pools
+
+A pool is a logical group for storing objects. It holds a collection of objects, known as Placement Groups (PG, pg_num).
+
+
+ CephFS
+
+Ceph also provides a filesystem, which runs on top of the same object storage as RADOS block devices do. A Metadata Server (MDS) is used to map the RADOS backed objects to files and directories, allowing Ceph to provide a POSIX-compliant, replicated filesystem. This allows you to easily configure a clustered, highly available, shared filesystem. Ceph’s Metadata Servers guarantee that files are evenly distributed over the entire Ceph cluster. 
+
+ Metadata Server (MDS)
+
+CephFS needs at least one Metadata Server to be configured and running, in order to function. You can create an MDS through the Proxmox VE web GUI’s Node -> CephFS panel 
+
+ Create CephFS
+
+With Proxmox VE’s integration of CephFS, you can easily create a CephFS using the web interface, CLI or an external API interface.
+
+After this is complete, you can simply create a CephFS through either the Web GUI’s Node -> CephFS panel 
+
 
 ## QEMU/KVM Virtual Machines
 
