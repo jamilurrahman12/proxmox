@@ -807,42 +807,71 @@ Ceph consists of multiple Daemons for use as an RBD storage:
 * Ceph Metadata Service (ceph-mds, or MDS)
 * Ceph Object Storage Daemon (ceph-osd, or OSD)
 
+### Attach a Hard Disk to each pve node
+
+<img width="441" height="422" alt="image" src="https://github.com/user-attachments/assets/367ecef5-b62e-4b59-9a46-d268fcd68263" />
+
+
 ### Initial Ceph Installation & Configuration
 
-The configuration step includes the following settings:
+Now, we need a dedicated network for Ceph communication. Perform this step on each node before installing Ceph.
 
-    Public Network: This network will be used for public storage communication (e.g., for virtual machines using a Ceph RBD backed disk, or a CephFS mount), and communication between the different Ceph services. This setting is required.
-    Separating your Ceph traffic from the Proxmox VE cluster communication (corosync), and possible the front-facing (public) networks of your virtual guests, is highly recommended. Otherwise, Ceph’s high-bandwidth IO-traffic could cause interference with other low-latency dependent services.
+<img width="599" height="290" alt="image" src="https://github.com/user-attachments/assets/876c3ec1-8343-43ce-b945-c46a9cff2f9a" />
 
-    Cluster Network: Specify to separate the OSD replication and heartbeat traffic as well. This setting is optional.
-    Using a physically separated network is recommended, as it will relieve the Ceph public and the virtual guests network, while also providing a significant Ceph performance improvements. 
+```bash
+PVE-1 >> 10.10.1.10
+PVE-2 >> 10.10.1.20
+PVE-3 >> 10.10.1.30
+```
 
+Now, Go to **Ceph** menu:
 
-You have two more options which are considered advanced and therefore should only changed if you know what you are doing.
-
-    Number of replicas: Defines how often an object is replicated.
-
-    Minimum replicas: Defines the minimum number of required replicas for I/O to be marked as complete.
-Additionally, you need to choose your first monitor node. This step is required.
-
-You should now see a success page as the last step, with further instructions on how to proceed. Your system is now ready to start using Ceph. To get started, you will need to create some additional monitors, OSDs and at least one pool.
+<img width="759" height="566" alt="image" src="https://github.com/user-attachments/assets/febe6131-97e7-4607-b3b5-6e4b5e6ef1ca" />
 
 
- Ceph Monitor
-screenshot/gui-ceph-monitor.png
+<img width="757" height="566" alt="image" src="https://github.com/user-attachments/assets/f955051b-8653-4641-bc5e-64a02825c1b8" />
 
-The Ceph Monitor (MON) [5] maintains a master copy of the cluster map. For high availability, you need at least 3 monitors.
 
- Ceph Manager
+* **Public Network:** This network will be used for VM storage communication and communication between different Ceph services.
+    
 
-The Manager daemon runs alongside the monitors. It provides an interface to monitor the cluster. Since the release of Ceph luminous, at least one ceph-mgr [6] daemon is required.
+* **Cluster Network:** To separate the OSD replication and heartbeat traffic as well.
 
- Ceph OSDs
+
+
+**Number of replicas:** Defines how often an object is replicated.
+
+**Minimum Replicas:** Defines the minimum number of required replicas for I/O to be considered complete.
+
+
+<img width="757" height="565" alt="image" src="https://github.com/user-attachments/assets/6db102cc-5543-484e-921a-5481cf901d3d" />
+
+
+Install Ceph on the remaining nodes. 
+
+To get started, you will need to create some additional monitors, OSDs, and at least one pool.
+
+
+#### Ceph Monitor
+
+The Ceph Monitor (MON) maintains a master copy of the cluster map. For high availability, you need at least 3 monitors.
+
+<img width="1286" height="488" alt="image" src="https://github.com/user-attachments/assets/952b6165-a564-416b-a10c-b9637ac19405" />
+
+
+#### Ceph Manager
+
+The Manager daemon runs alongside the monitors. It provides an interface to monitor the cluster. At least one manager is required.
+
+#### Ceph OSDs
  
-
 Ceph Object Storage Daemons store objects for Ceph over the network. It is recommended to use one OSD per physical disk.
 
- Ceph Pools
+<img width="599" height="272" alt="image" src="https://github.com/user-attachments/assets/c594a292-1306-4a47-b195-f31ba8f1be6e" />
+
+Create an OSD on each node for each disk.
+
+#### Ceph Pools
 
 A pool is a logical group for storing objects. It holds a collection of objects, known as Placement Groups (PG, pg_num).
 
