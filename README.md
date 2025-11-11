@@ -880,10 +880,11 @@ A pool is a logical group for storing objects. It holds a collection of objects,
 
 <img width="599" height="282" alt="image" src="https://github.com/user-attachments/assets/b8ceb520-9b20-4e24-bf4b-15f18e9abe0c" />
 
+Ceph storage creation for VM/CT disks has been done. Additionally, you can create CephFS for storing files, like iso, templates, etc.
 
 #### CephFS
 
-Ceph also provides a filesystem, which runs on top of the same object storage as RADOS block devices do. A Metadata Server (MDS) is used to map the RADOS backed objects to files and directories, allowing Ceph to provide a POSIX-compliant, replicated filesystem. This allows you to easily configure a clustered, highly available, shared filesystem. Ceph’s Metadata Servers guarantee that files are evenly distributed over the entire Ceph cluster. 
+Ceph also provides a filesystem, which runs on top of the same object storage as RADOS block devices do. A Metadata Server (MDS) is used to map RADOS-backed objects to files and directories, allowing Ceph to provide a POSIX-compliant, replicated file system. This allows you to easily configure a clustered, highly available, and shared file system. Ceph’s Metadata Servers guarantee that files are evenly distributed over the entire Ceph cluster. 
 
 #### Metadata Server (MDS)
 
