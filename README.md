@@ -918,7 +918,9 @@ The integrated firewall allows you to filter network packets on any VM or Contai
 
 ### High Availability (HA) - PVE HA Manager
 
-#### Requirements: before starting HA:
+The main task is to manage the VM/CTs that are configured to be highly available and try to always enforce the pre-configured requested state. For example, a VM with requested state -**started** will be started if it's not running. If it crashes, it will be automatically started again.
+
+#### Requirements (before starting HA):
 
 * at least three cluster nodes (to get a reliable quorum)
 
@@ -927,28 +929,25 @@ The integrated firewall allows you to filter network packets on any VM or Contai
 * hardware redundancy (everywhere)
 
 
+Responsible daemons 
 
+**pve-ha-lrm:** Local Resource Manager (LRM), which controls the services running on the local node.
 
-This section provides a detailed description of the Proxmox VE HA manager internals. It describes all involved daemons and how they work together. To provide HA, two daemons run on each node:
-
-* pve-ha-lrm
-
-    The local resource manager (LRM), which controls the services running on the local node. It reads the requested states for its services from the current manager status file and executes the respective commands.
-
-* pve-ha-crm
-
-    The cluster resource manager (CRM), which makes the cluster-wide decisions. It sends commands to the LRM, processes the results, and moves resources to other nodes if something fails. The CRM also handles node fencing.
-
-* Service States >> migrate
+**pve-ha-crm:** cluster resource manager (CRM), which makes the cluster-wide decisions. It sends commands to the LRM, processes the results, and relocates resources to other nodes if any failure occurs. The CRM also handles node fencing.
 
 #### Start Failure Policy
 
-* max_restart
+* max_restart: Maximum number of attempts to restart a failed VM/CT on the actual node.
+* max_relocate: Maximum number of attempts to relocate the VM/CT to a different node. A relocation only happens after the max_restart is exceeded on the actual node.
 
-    Maximum number of attempts to restart a failed service on the actual node. The default is set to one.
-* max_relocate
 
-    Maximum number of attempts to relocate the service to a different node. A relocate only happens after the max_restart value is exceeded on the actual node. The default is set to one.
+<img width="598" height="216" alt="image" src="https://github.com/user-attachments/assets/1c98a6d2-1a46-4f4e-a1ad-c3a5bf847874" />
+
+<img width="983" height="402" alt="image" src="https://github.com/user-attachments/assets/188c0d76-75a4-4b77-88c9-40ca2105f351" />
+
+<img width="598" height="488" alt="image" src="https://github.com/user-attachments/assets/2c27a38a-24fc-4b4c-909c-7e5b7f4ead5d" />
+
+<img width="596" height="186" alt="image" src="https://github.com/user-attachments/assets/2c30e9b3-8fb7-4f08-8bf6-33d534955d30" />
 
 
 #### Node  Shutdown Policy
