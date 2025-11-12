@@ -916,8 +916,59 @@ The integrated firewall allows you to filter network packets on any VM or Contai
 
 ## Disaster Recovery: DC-DR Concept
 
-## High Availability (HA) - PVE HA Manager
+### High Availability (HA) - PVE HA Manager
 
+#### Requirements: before starting HA:
+
+* at least three cluster nodes (to get a reliable quorum)
+
+* shared storage for VMs and containers
+
+* hardware redundancy (everywhere)
+
+
+
+
+This section provides a detailed description of the Proxmox VE HA manager internals. It describes all involved daemons and how they work together. To provide HA, two daemons run on each node:
+
+* pve-ha-lrm
+
+    The local resource manager (LRM), which controls the services running on the local node. It reads the requested states for its services from the current manager status file and executes the respective commands.
+
+* pve-ha-crm
+
+    The cluster resource manager (CRM), which makes the cluster-wide decisions. It sends commands to the LRM, processes the results, and moves resources to other nodes if something fails. The CRM also handles node fencing.
+
+* Service States >> migrate
+
+#### Start Failure Policy
+
+* max_restart
+
+    Maximum number of attempts to restart a failed service on the actual node. The default is set to one.
+* max_relocate
+
+    Maximum number of attempts to relocate the service to a different node. A relocate only happens after the max_restart value is exceeded on the actual node. The default is set to one.
+
+
+#### Node  Shutdown Policy
+
+The default policy is **conditional**; Change it to **migrate** (**Datacenter → Options → HA Settings**)
+
+<img width="349" height="125" alt="image" src="https://github.com/user-attachments/assets/98fea1fe-d997-4c9a-b7f1-19a2ce214297" />
+
+
+
+#### Cluster Resource Scheduling
+
+Controls how HA selects **nodes** for the recovery of a VM/CT, as well as for migrations triggered by a shutdown policy. The default mode is basic; change it to **Static Load** (**Datacenter → Options → Cluster Resource Scheduling**)
+
+<img width="448" height="166" alt="image" src="https://github.com/user-attachments/assets/441d68c6-21dc-403c-aa2a-efd1ae203a11" />
+
+
+#### Fencing
+
+On node failures, fencing ensures that the erroneous node is guaranteed to be offline. No VM/CT runs twice when it gets recovered on another node.
 
 
 ### VM / Storage Replication
