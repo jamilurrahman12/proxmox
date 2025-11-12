@@ -897,22 +897,11 @@ When you have MDS, create CephFS.
 
 ## QEMU/KVM Virtual Machines
 
+Live Demo --> understanding every setting and use cases by creating 2/3 VMs on different nodes.
+
 ## Proxmox Container Toolkit
 
-## High Availability (HA) - PVE HA Manager
-
-## Testing
-
-### Live Migration
-### High Availability (HA)
-
-
-## Migration
-
-### VMware to Proxmox
-
-### Proxmox to VMware
-
+Live Demo --> Creating multiple containers and setting up a live website in containers.
 
 ## Proxmox VE Firewall
 
@@ -927,7 +916,13 @@ The integrated firewall allows you to filter network packets on any VM or Contai
 
 ## Disaster Recovery: DC-DR Concept
 
+## High Availability (HA) - PVE HA Manager
+
+
+
 ### VM / Storage Replication
+
+https://pve.proxmox.com/pve-docs/chapter-pvesr.html
 
 ### Local Backup Procedure
 
@@ -947,3 +942,18 @@ The integrated firewall allows you to filter network packets on any VM or Contai
 ### Backup Job creation and management
 
 ### Restoration
+
+## Testing
+
+### Live Migration
+### High Availability (HA)
+### Fault Tolerance
+### Live backup and restore
+
+## Cloud Platform Migration
+
+### VMware to Proxmox
+
+### Proxmox to VMware
+
+## Proxmox VE in Production: A Live Tour
