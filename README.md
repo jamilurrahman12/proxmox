@@ -984,30 +984,26 @@ The minimum replication interval is one minute, and the maximum interval is once
 
 
 
-### Local Backup Procedure
-
-### VM Snapshot & VM Clone
-
-### VM Restore & Snapshot Revert
+### Local Backup & Restore Procedure
 
 
 ## Proxmox Backup Server (PBS): Open-Source Enterprise Backup Solution
 
-### Installation and Configuration
+➡️ Installation and Configuration
 
-### Integration with Proxmox Cluster
+➡️ Integration with Proxmox Cluster
 
-### Backup Job creation and management
+➡️ Backup Job creation and management
 
-### Restoration
+➡️ Restoration
 
 
 ## Testing
 
-### Live Migration
-### High Availability (HA)
-### Fault Tolerance
-### Live backup and restore
+✅ Live Migration
+✅ High Availability (HA)
+✅ Fault Tolerance
+✅ Live backup and restore
 
 ## Cloud Platform Migration
 
