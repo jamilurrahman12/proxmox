@@ -905,12 +905,11 @@ Live Demo --> Creating multiple containers and setting up a live website in cont
 
 ## Proxmox VE Firewall
 
-The integrated firewall allows you to filter network packets on any VM or Container interface. Common sets of firewall rules can be grouped into “security groups”.
+This integrated firewall allows you to filter network packets on any VM or Container. Common sets of firewall rules can be grouped into “security groups”.
 
 * Host-Specific Firewall Rules
 * VM Specific Firewall Rules
 * Security Group Implementation
-* Proxmox VE Hosts Security
 * Filter Remote IPs
 
 
@@ -929,7 +928,7 @@ The main task is to manage the VM/CTs that are configured to be highly available
 * hardware redundancy (everywhere)
 
 
-Responsible daemons 
+#### Responsible daemons behind HA
 
 **pve-ha-lrm:** Local Resource Manager (LRM), which controls the services running on the local node.
 
@@ -952,10 +951,7 @@ Responsible daemons
 
 #### Node  Shutdown Policy
 
-The default policy is **conditional**; Change it to **migrate** (**Datacenter → Options → HA Settings**)
-
-<img width="349" height="125" alt="image" src="https://github.com/user-attachments/assets/98fea1fe-d997-4c9a-b7f1-19a2ce214297" />
-
+The default policy is **conditional**; it's a good choice. (**Datacenter → Options → HA Settings**)
 
 
 #### Cluster Resource Scheduling
@@ -972,11 +968,23 @@ On node failures, fencing ensures that the erroneous node is guaranteed to be of
 
 ### VM / Storage Replication
 
-https://pve.proxmox.com/pve-docs/chapter-pvesr.html
+The **pvesr** command-line tool manages the Proxmox VE storage replication framework.
+
+It replicates guest volumes to another node, ensuring all data is available without relying on shared storage. 
+
+Replication utilizes snapshots to minimize network traffic. Therefore, new data is sent only incrementally after the initial full sync.
+
+It is possible to replicate a guest to multiple target nodes, but not twice to the same target node.
+
+The replication direction automatically switches if you migrate a guest to the replication target node.
+
+The minimum replication interval is one minute, and the maximum interval is once a week.
+
+<img width="298" height="266" alt="image" src="https://github.com/user-attachments/assets/fe7b40e3-b5a6-4781-af8d-0bd9802b7fe9" />
+
+
 
 ### Local Backup Procedure
-
-#### Backup Jobs & Retention Policy
 
 ### VM Snapshot & VM Clone
 
@@ -993,6 +1001,7 @@ https://pve.proxmox.com/pve-docs/chapter-pvesr.html
 
 ### Restoration
 
+
 ## Testing
 
 ### Live Migration
@@ -1004,6 +1013,34 @@ https://pve.proxmox.com/pve-docs/chapter-pvesr.html
 
 ### VMware to Proxmox
 
+1. In VMware, Power off the VM.
+2. Consolidate snapshots, so you can copy a single, clean disk.
+3. Copy the VMDK (and its -flat.vmdk as well) to the Proxmox node
+
+```bash
+#example command - 
+scp root@esxi:/vmfs/volumes/DATASTORE/VM/VM.vmdk /root/
+```
+
+4. Create an empty VM shell (no disk yet)
+5. Import the VMDK as RAW onto your target storage
+
+```bash
+qm importdisk 101 /root/VM.vmdk <your-storage> --format raw
+```
+
+This converts and uploads straight into a Proxmox volume named like _vm-101-disk-0_
+
+6. Attach the new RAW disk to the VM
+
 ### Proxmox to VMware
+
+At first, export the PVE-Ceph hosted VM disk to a directory. then, convert to vmdk format.
+
+```bash
+rbd export pool/vm-101-disk-0 /root/disk.raw
+qemu-img convert -p -f raw -O vmdk /root/disk.raw  /root/disk.vmdk
+```
+
 
 ## Proxmox VE in Production: A Live Tour
