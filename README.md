@@ -918,7 +918,7 @@ The integrated firewall allows you to filter network packets on any VM or Contai
 
 ### High Availability (HA) - PVE HA Manager
 
-The main task is to manage the VM/CTs that are configured to be highly available and try to always enforce the pre-configured requested state. For example, a VM with requested state -**started** will be started if it's not running. If it crashes, it will be automatically started again.
+The main task is to manage the VM/CTs that are configured to be highly available and try to always enforce the pre-configured requested state. For example, if a VM is configured with the requested state **started**, the PVE HA manager will always try to ensure the VM is in the start state.
 
 #### Requirements (before starting HA):
 
