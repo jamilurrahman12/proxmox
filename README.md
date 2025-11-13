@@ -1001,8 +1001,11 @@ The minimum replication interval is one minute, and the maximum interval is once
 ## Testing
 
 ✅ Live Migration
+
 ✅ High Availability (HA)
+
 ✅ Fault Tolerance
+
 ✅ Live backup and restore
 
 ## Cloud Platform Migration
